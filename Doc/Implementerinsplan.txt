@@ -1,0 +1,43 @@
+TDP019-Implementeringsplan
+
+Introduktion:
+
+I projektet kommer ett programmeringsspråk skapas vilket är passande för en nybörjare.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+schema: 
+Vecka                          Beskrivning
+9                              Implementeringsplan skapas
+10                             Ytterligare förbättring och komplettering
+11                             Omtenta/tentaperiod
+12                             Omtenta/tentaperiod
+13-18                          Implementering av språket
+19                             Implementering av språket & inlämning av skriftlig dokumentation (Deadline : 12.00 , 210511)
+20                             Redovisning, opponering 
+21-22                          Inlämningar (Deadline : 09.00 , 210602)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+parser: 
+Vi har valt att använda befintliga parsern (rdparse.rb) som vår parser. 
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+backlog: 
+-BNF grammatiken
+-classer
+-
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+milstolpar:
+-språkspecifikation ska vara klar vecka 9.
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Arbetsfördelning:
+Vi kodar och skriver samtidigt det vill säga att vi båda jobbar tillsammans hela tiden. 
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Identifierande av särskilt svåra delar att implementera och förslag till metoder eller algoritmer för att lösa dessa
