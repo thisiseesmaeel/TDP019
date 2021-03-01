@@ -1,0 +1,40 @@
+start program
+
+a = 5
+b = 8
+
+define myfunc(a, b)
+
+if ( a < b ) then
+write “a is smaller than b”
+
+else if ( b < a) then
+write "b is smaller than a"
+
+otherwise 
+write “b is bigger than a”
+endif
+
+return "the end"
+
+enddef
+
+myfunc(a, b)
+
+while (y < 5)
+write “y is less than five”
+endwhile
+
+x = "Hej "
+y = "på "
+
+write x plus y plus "dig!" ## Hej på dig!
+
+f = 5 * 5 ##term
+f * 2 ##term * atom
+5 / 5
+
+g = 1 + 2 ##expr + expr
+g - 3 ##expr - term
+
+end program
