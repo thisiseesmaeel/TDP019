@@ -32,6 +32,8 @@ backlog:
 milstolpar:
 -språkspecifikation ska vara klar vecka 9.
 
+"Skriva lite mer här"
+
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Arbetsfördelning:
