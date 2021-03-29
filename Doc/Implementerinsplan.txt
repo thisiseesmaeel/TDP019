@@ -23,8 +23,9 @@ Vi har valt att använda befintliga parsern (rdparse.rb) som vår parser.
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 backlog: 
+-Tokens
 -BNF grammatiken
--classer
+-Classer
 -
 
 
