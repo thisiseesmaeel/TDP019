@@ -20,34 +20,35 @@ class Etl
         
 
       #+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- BEGIN BNF +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ 
-        start :program do
+=begin         start :program do
             match("startprogram", :statements, "endprogram") { |_, states, _| states }
-            end
+            end 
+=end
 
-        #HJÄLP
-        rule :statements do
+=begin         rule :statements do
             match(:statements, :statement) { |states, state| 
             states << state
             states }
             match(:statement) { |state| state }
             end 
-
+=end
         rule :statement do
-            match(:print)
+            ##match(:print)
             match(:function) 
             match(:function_call) 
             match(:return) 
             match(:while_loop)
             match(:break) 
-            match(:if_block) 
-            match(:assign) 
+            ##match(:if_block) 
+            ##match(:assign) 
             end
 
-        rule :print do
+=begin         rule :print do
             match("write", :string_expr) { |_, str_exp| Print.new(print) }
             match("write", :expr) { |_, exp| Print.new(print) } 
             match("write", :string_adding) { |_, str_add| Print.new(print) }
-            end
+            end 
+=end
 
 =begin         rule :string_expr do
             #match(/'[^\']*'/) { |string| str = Atom.new(string.slice(1, string.length-2)) }
@@ -73,10 +74,11 @@ class Etl
             end 
 =end
 
-        rule :string_adding do
+=begin         rule :string_adding do
             match(:string_adding, "plus", :string_expr) { |str_add, _, str_exp| Expr.new("plus", str_add, str_exp) }
             match(:string_expr, "plus", :string_expr) { |str_exp1, _, str_exp2| Expr.new("plus", str_exp1, str_exp2) }
-            end
+            end 
+=end
         
 =begin         rule :id do
             match(/[a-z]+[a-z0-9_]*/) { |variable_name| Variable.new(variable_name) }
@@ -151,13 +153,14 @@ class Etl
             end 
 =end 
 
-        rule :if_block do
+=begin         rule :if_block do
             match("if", "(", :bool_expr, ")", "then", :statements, "endif") { |_, _, bool_exp, _, _, if_states, _| If.new(bool_exp, if_states) }
             match("if", "(", :bool_expr, ")", "then", :statements, "otherwise", :statements, "endif") { |_, _, bool_exp, _, _, if_states, _, else_states, _| 
                 If.new(bool_exp, if_states, else_states) }
             match("if", "(", :bool_expr, ")", "then", :statements, "elseif", "(", :bool_expr, ")", "then", :statements, "otherwise", :statements, "endif") { |_, _, bool_exp_if, _, _, if_states, _, _, bool_exp_elseif, _, _, elseif_states, _, else_states, _| 
                 If.new(bool_exp, if_states, bool_exp, elseif_states, else_states) }
-            end    
+            end     
+=end
                     
 =begin         rule :assign do
             match(:id, "=", :expr) { |variable, _, expr| Assign.new(variable, expr) }

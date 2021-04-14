@@ -1,1 +1,10 @@
-x = 5
+startprogram
+
+
+if (true and false) then
+write "fucking ahmed"
+otherwise
+write "Ismail is king!"
+endif
+
+endprogram
