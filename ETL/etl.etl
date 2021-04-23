@@ -1,10 +1,30 @@
 startprogram
 
+define add(x, y)
+return x + y
+enddef
 
-if (true and false) then
-write "fucking ahmed"
-otherwise
-write "Ismail is king!"
-endif
+add(99999999999999999, 77777777777777777)
 
-endprogram
+endprogram 
+
+
+
+
+<comment 
+define add(x, y)
+return x + y
+enddef
+
+add(99999999999999999, 77777777777777777)
+<end
+
+<comment
+define add()
+x = 5
+y = 5 * x
+return y
+enddef
+
+add()
+<end

@@ -8,13 +8,14 @@ class Etl
     def initialize
         @etlParser = Parser.new("ETL") do
       #+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- BEGIN TOKENS +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+        token(/\<comment[^!]*\<end/) #matcha inte flerarads kommentarer
+        token(/(<<.+$)/) #matcha inte en rad kommentar
         token(/\s+/)  #mellanrum ska inte matchas
         token(/(\d+[.]\d+)/) { |m| m.to_f } #floattal
         token(/\d+/) { |m| m.to_i } #heltal
         token(/'[^\']*'/) { |m| m } #sträng inom enkelt citattecken (' ')
         token(/"[^\"]*"/) { |m| m } #sträng inom dubbelt citattecken (" ")
-        token(/[a-z]+[a-z0-9_]*/) { |m| m } #variabler name
-        token(/plus/) { |m| m }
+        token(/[a-z]+[a-z0-9_]*/) { |m| m } #variabler namn
         token(/./) { |m| m } #allt annat(enkla käraktarer)
       #+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- END TOKENS +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
@@ -30,25 +31,25 @@ class Etl
         end
             
         rule :statement do
-            match(:string_expr)
-            match(:string_adding)
-            match(:expr)
+            match(:return) 
+            match(:function) 
+            match(:function_call)
+            match(:break) 
             match(:print)
-            match(:bool_logic)
-            #match(:function) 
-            #match(:function_call) 
-            #match(:return) 
-            #match(:while_loop)
-            #match(:break) 
-            match(:if_block) 
-            match(:assign) 
+            ##match(:bool_logic)
+            match(:if_box) 
+            match(:while_loop)
+            match(:assign)
+            ##match(:string_adding)
+            ##match(:string_expr)
+            ##match(:expr)
             end
 
         rule :assign do
-            match(:id, "=", :expr) { |variable, _, expr| Assign.new(variable, expr) }
             match(:id, "=", :bool_logic) { |variable, _, bool_exp| Assign.new(variable, bool_exp) }
-            match(:id, "=", :string_expr) { |variable, _, str_exp| Assign.new(variable, str_exp) }
             match(:id, "=", :string_adding) { |variable, _, expr| Assign.new(variable, expr) }
+            match(:id, "=", :string_expr) { |variable, _, str_exp| Assign.new(variable, str_exp) }
+            match(:id, "=", :expr) { |variable, _, expr| Assign.new(variable, expr) }
             end
 
         rule :string_expr do
@@ -65,7 +66,6 @@ class Etl
         rule :expr do
             match(:expr, '+', :term) { |expr, _, term| Expr.new('+', expr, term) }
             match(:expr, '-', :term) { |expr, _, term| Expr.new('-', expr, term) }
-            ##match(:expr, '<', :expr) { |expr1, _, expr2| Condition.new('<', expr1, expr2) }
             match(:term) { |term| term }
             end
 
@@ -83,7 +83,7 @@ class Etl
             match('true') { Constant.new(true) }
             match('false') { Constant.new(false) }
             match('(', :bool_logic, ')') { |_, expr, _| expr }
-            ##match(:id) { |var| var }
+            #match(:id) { |var| var }
             match(:bool_list)
             end 
 
@@ -107,22 +107,22 @@ class Etl
         end
 
         rule :less_than_or_equal_to do
-            match(:expr, '<=', :expr) { |expr1, _, expr2| Condition.new('<=', expr1, expr2) }
+            match(:expr, '<', '=', :expr) { |expr1, _, _, expr2| Condition.new('<=', expr1, expr2) }
             match(:expr, 'less', 'than', 'or', 'equal', 'to', :expr) { |expr1, _, _, _, _, _, expr2| Condition.new('less than or equal to', expr1, expr2) }
         end
 
         rule :greater_than_or_equal_to do
-            match(:expr, '>=', :expr) { |expr1, _, expr2| Condition.new('>=', expr1, expr2) }
+            match(:expr, '>', '=', :expr) { |expr1, _, _, expr2| Condition.new('>=', expr1, expr2) }
             match(:expr, 'greater', 'than', 'or', 'equal', 'to', :expr) { |expr1, _, _, _, _, _, expr2| Condition.new('greater than or equal to', expr1, expr2) }
         end
 
         rule :not_equal_to do
-            match(:expr, '!=', :expr) { |expr1, _, expr2| Condition.new('!=', expr1, expr2) }
+            match(:expr, '!', '=', :expr) { |expr1,_, _, expr2| Condition.new('!=', expr1, expr2) }
             match(:expr, 'not', 'equal', 'to', :expr) { |expr1, _, _, _, expr2| Condition.new('not equal to', expr1, expr2) }
         end
 
         rule :equal do
-            match(:expr, '==', :expr) { |expr1, _, expr2| Condition.new('==', expr1, expr2) }
+            match(:expr, '=', '=', :expr) { |expr1,_, _, expr2| Condition.new('==', expr1, expr2) }
             match(:expr, 'equal', :expr) { |expr1, _, expr2| Condition.new('equal', expr1, expr2) }
         end
 
@@ -130,20 +130,53 @@ class Etl
             match(/[a-z]+[a-z0-9_]*/) { |variable_name| Variable.new(variable_name) }
             end
 
-        rule :if_block do
-            match("if", "(", :bool_logic, ")", "then", :statements, "endif") { |_, _, bool_exp, _, _, if_states, _| If.new(bool_exp, if_states) }
-            match("if", "(", :bool_logic, ")", "then", :statements, "otherwise", :statements, "endif") { |_, _, bool_exp, _, _, if_states, _, else_states, _| 
-                If.new(bool_exp, if_states, else_states) }
-            match("if", "(", :bool_logic, ")", "then", :statements, "elseif", "(", :bool_logic, ")", "then", :statements, "otherwise", :statements, "endif") { |_, _, bool_exp_if, _, _, if_states, _, _, bool_exp_elseif, _, _, elseif_states, _, else_states, _| 
-                If.new(bool_exp_if, if_states, bool_exp_elseif, elseif_states, else_states) }
+        rule :function do
+            match("define", :id, "(", :parameters, ")", :statements, "enddef") { |_, def_name, _, params, _, states, _| 
+                Function.new(def_name, params, states) }
+            match("define", :id, "(", ")", :statements, "enddef") { |_, def_name, _, _, states, _| Function.new(def_name, states) }
+            end
+
+        rule :function_call do
+            match(:id, "(", ")") { |def_name, _, _| FunctionCall.new(def_name) }
+            match(:id, "(", :parameters, ")") { |def_name, _, params, _| FunctionCall.new(def_name, params) }
+            end 
+
+        rule :return do
+            match("return", :parameters) { |_, params| Return.new(params) }
+            end
+            
+        rule :parameters do
+            match(:parameters, ",", :parameter) { |params, _, param| Statements.new(params, param) }
+            match(:parameter)
+            end  
+
+        rule :parameter do
+            match(:string_adding)
+            match(:string_expr)
+            match(:expr)
+            match(:bool_logic)
+            end  
+
+        rule :while_loop do
+            match("while", "(", :bool_logic, ")", :statements, "endwhile") { |_, _, bool_log, _, states, _| While.new(bool_log, states) }    
+            end
+
+        rule :break do
+            match("break") { |_| Break.new() }
+            end
+    
+        rule :if_box do
+            match("if", "(", :bool_logic, ")", "then", :statements, "endif") { |_, _, bool_log, _, _, if_states, _| If.new(bool_log, if_states) }
+            match("if", "(", :bool_logic, ")", "then", :statements, "otherwise", :statements, "endif") { |_, _, bool_log, _, _, if_states, _, else_states, _| 
+                If.new(bool_log, if_states, else_states) }
             end    
 
         rule :print do
+            match("write", :string_adding) { |_, str_add| Print.new(str_add) }
             match("write", :string_expr) { |_, str_exp| Print.new(str_exp) }
-            match("write", :expr) { |_, exp| Print.new(exp) } 
             match("write", :bool_logic) { |_, bool_log| Print.new(bool_log) } 
             match("write", :id) { |_, id| Print.new(id) }
-            match("write", :string_adding) { |_, str_add| Print.new(str_add) }
+            match("write", :expr) { |_, exp| Print.new(exp) } 
             end
 
         rule :atom do
@@ -151,9 +184,9 @@ class Etl
             match(Integer) { |int_num| Constant.new(int_num) }
             match("-", Float) { |a, b| Constant.new(b, a) }
             match("-", Integer) { |a, b| Constant.new(b, a) }
-            #match(:id) { |id| id }
-            match('(',:expr,')') { |_,expr,_| Expression_node.new(expr) }
+            match('(',:expr,')') { |_,expr,_| ExpressionNode.new(expr) }
             ##match(:function_call)
+            match(:id) { |id| id }
             end
             
         end #end för alla rules
@@ -206,22 +239,3 @@ test.activate_file("etl.etl")
 
 #test.log(false)
 #test.activate_terminal
-
-
-=begin 
-Ex 1. 
-
-a = 12
-b = 4
-
-if a > b
-puts "a is bigger than b" 
-
-Ex 2.
-a = 12
-b = 4
-
-if a greater than b
-puts "a is bigger than b" 
-
-=end

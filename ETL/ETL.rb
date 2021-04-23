@@ -34,11 +34,11 @@ class Etl
 =end
         rule :statement do
             ##match(:print)
-            match(:function) 
-            match(:function_call) 
-            match(:return) 
-            match(:while_loop)
-            match(:break) 
+            #match(:function) 
+            #match(:function_call) 
+            #match(:return) 
+            #match(:while_loop)
+            #match(:break) 
             ##match(:if_block) 
             ##match(:assign) 
             end
@@ -85,7 +85,7 @@ class Etl
             end 
 =end
 
-        rule :function do
+=begin         rule :function do
             match("define", :id, "(", :parameters, ")", :statements, "enddef") { |_, def_name, _, params, _, states, _| 
                 Function.new(def_name, params, states) }
             match("define", :id, "()", :statements, "enddef") { |_, def_name, _, states, _| Function.new(def_name, states) }
@@ -94,19 +94,21 @@ class Etl
         rule :function_call do
             match(:id, "()") { |def_name, _| Function_call.new(def_name) }
             match(:id, "(", :parameters, ")") { |def_name, _, params, _| Function_call.new(def_name, params) }
-            end
+            end 
+=end
 
-        rule :return do
+=begin         rule :return do
             match("return", :expr) { |_, expr| Return.new(expr) }
             match("return", :string_expr) { |_, str_exp| Return.new(str_exp) }
-            end
+            end 
+=end
 
 =begin  rule :parameters do
             match(:parameter) { |param| [param] }
             match(:parameters, ',', :parameter) { |params,_,param| params + [param] }
         end 
 =end
-        rule :parameters do
+=begin         rule :parameters do
             match(:parameters, ",", :parameter) { |params, _, param|
             params << param
             params }
@@ -117,15 +119,15 @@ class Etl
             match(:expr)
             match(:string_expr)
             end
-
-        rule :while_loop do
-            match("while", "(", :bool_expr, ")", :statements, "endwhile") { |_, _, bool_exp, _, states, _| While.new(bool_exp, states) }    
+=end
+=begin         rule :while_loop do
+            match("while", "(", :bool_logic, ")", :statements, "endwhile") { |_, _, bool_log, _, states, _| While.new(bool_log, states) }    
             end
 
         rule :break do
             match("break") { |_| Break.new() }
             end
-
+=end
 =begin         rule :bool_expr do
             match(:bool_expr, "and", :bool_expr) { |bool_exp1, _, bool_exp2| Expr.new("and", bool_exp1, bool_exp2) }
             match(:bool_expr, "or", :bool_expr) { |bool_exp1, _, bool_exp2| Expr.new("or", bool_exp1, bool_exp2) }
