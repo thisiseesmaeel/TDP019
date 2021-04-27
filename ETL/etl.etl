@@ -1,10 +1,40 @@
 startprogram
 
-define add(x, y)
-return x + y
+
+y = 5
+while ( y < 10) 
+write "yes yes"
+y = y + 1
+<<stop
+endwhile
+
+
+x = 7
+if (x < 6) then
+write "Yes"
+otherwise
+write "No"
+endif
+
+
+<<x = 10
+define add()
+x = 5
+z = x + 7
+a = z + x
+return z
 enddef
 
-add(99999999999999999, 77777777777777777)
+write add()
+
+
+define add2(x, y)
+z = x + y
+return z
+enddef
+
+write add2(99999999999999999, 77777777777777777)
+
 
 endprogram 
 
@@ -13,18 +43,37 @@ endprogram
 
 <comment 
 define add(x, y)
-return x + y
+z = x + y
+return z
 enddef
 
-add(99999999999999999, 77777777777777777)
+write add(99999999999999999, 77777777777777777)
 <end
 
 <comment
 define add()
 x = 5
-y = 5 * x
-return y
+z = x + 7
+a = z + x
+return a
 enddef
 
-add()
+write add()
+<end
+
+<comment
+x = 4
+if (x < 6) then
+write "Yes"
+otherwise
+write "No"
+endif
+<end
+
+<comment
+y = 5
+while ( y < 10) 
+write "yes yes"
+y = y + 1
+endwhile
 <end
