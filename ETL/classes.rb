@@ -197,14 +197,14 @@ $our_funcs = Hash.new
 class Function     
     attr_accessor :def_name, :f_arguments, :states
     def initialize(def_name, f_arguments, states)
-      @def_name = def_name
-      @f_arguments = f_arguments
-      @states = states
-      if !$our_funcs.has_key?(@def_name)
-        $our_funcs[def_name] = self
-      else
-        raise("OOOPS! THE FUNCTION \"#{@def_name}\" DOES ALREADY EXISTS!")
-      end
+        @def_name = def_name
+        @f_arguments = f_arguments
+        @states = states
+        if !$our_funcs.has_key?(@def_name)
+            $our_funcs[def_name] = self
+        else
+            raise("OOOPS! THE FUNCTION \"#{@def_name}\" DOES ALREADY EXISTS!")
+        end
     end
     def recieveStates()
         @states
@@ -212,9 +212,9 @@ class Function
     def recieveArgs()
         @f_arguments
     end
-  end
+end
 
-  class FunctionCall
+class FunctionCall
     attr_accessor :def_name, :f_c_argument
     def initialize(def_name,f_c_argument)
         @def_name = def_name
@@ -249,9 +249,9 @@ end
 
 class Return
     def initialize(thing)
-      @thing = thing
+        @thing = thing
     end
     def eval
-      return @thing.eval
+        return @thing.eval
     end
 end 
