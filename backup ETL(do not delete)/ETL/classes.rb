@@ -1,60 +1,18 @@
 ## Alla klasser som behövs
 
-$our_funcs = Hash.new
+$our_vars = Hash.new
 
-class ScopeHandler
-    def initialize()
-        @@level = 1
-        @@holder = {}
-    end
-    def defineScope(s)
-        @@holder = s
-        return @@holder
-    end
-    def receiveHolder()
-        return @@holder
-    end
-    def receiveLevel()
-        return @@level
-    end
-    def incre()
-        @@level = @@level + 1
-        return @@holder
-    end
-    def decre(s)
-        defineScope(s)
-        @@level = @@level - 1
-        return nil
-    end
-end
+def look_up(variable, our_hash) # slå upp värde i $our_vars
+    our_hash[variable]
+end 
 
-$scope = ScopeHandler.new
-
-
-def look_up(variable, our_vars)
-    levelNr = $scope.receiveLevel
-    if our_vars == $scope.receiveHolder
-        loop do 
-            if our_vars[levelNr] != nil and our_vars[levelNr][variable] != nil
-                return our_vars[levelNr][variable]
-            end
-            levelNr = levelNr - 1
-        break if (levelNr < 0)
-        end
-        
-        if our_vars[levelNr] == nil
-            our_vars[variable]
-        end
-    end
-end
-
-class Variable
+class Variable              
     attr_accessor :variable_name
     def initialize(id)
         @variable_name = id
     end
-    def eval
-        return look_up(@variable_name, $scope.receiveHolder)
+    def eval()
+        return look_up(@variable_name, $our_vars)
     end
 end
 
@@ -150,26 +108,16 @@ class Expression
     end
 end
 
-class Assign
+class Assign             
     attr_reader :variable, :assign_expr
     def initialize(variable, assign_expr)
         @variable = variable
         @assign_expr = assign_expr
     end
-    def eval
+    def eval()
         value = @assign_expr.eval
-        @level_Nr = $scope.receiveLevel
-        scp = $scope.receiveHolder
-        if scp[@level_Nr] != nil
-            if scp[@level_Nr].has_key?(@variable.variable_name)
-                return scp[@level_Nr][@variable.variable_name] = value
-            else
-                scp[@level_Nr][@variable.variable_name] = value
-                return $scope.defineScope(scp)
-            end
-        elsif scp[@level_Nr] = {} and scp[@level_Nr][@variable.variable_name] = value
-            return $scope.defineScope(scp)
-        end
+        #puts "-> Assigning '#{@variable.variable_name}' to '#{value}' \n"
+        $our_vars[@variable.variable_name] = value
     end
 end
 
@@ -194,13 +142,8 @@ class Print
     end
     def eval()
         #puts
-        if @value.eval != nil   
-            puts "-->> Printing '#{@value.eval}'"
-            @value.eval
-        else
-            nil
-        end   
-    end
+        puts "--->>> Printing '#{@value.eval}'"
+    end 
 end
 
 class If
@@ -249,6 +192,9 @@ class Stop
     end
 end
 
+$our_funcs = Hash.new
+$scope = 0
+
 class Function     
     attr_accessor :def_name, :f_arguments, :states
     def initialize(def_name, f_arguments, states)
@@ -270,45 +216,43 @@ class Function
 end
 
 class FunctionCall
-    attr_accessor :def_name, :f_c_arguments
-    def initialize(def_name, f_c_arguments)
+    attr_accessor :def_name, :f_c_argument
+    def initialize(def_name,f_c_argument)
         @def_name = def_name
-        @f_c_arguments = f_c_arguments
-        @states = $our_funcs[@def_name.variable_name].recieveStates
-        @f_arguments = $our_funcs[@def_name.variable_name].recieveArgs
-
+        @f_c_argument = f_c_argument
         if !$our_funcs.has_key?(@def_name.variable_name)
             raise("OOOPS! THERE IS NO FUNCTION CALLED '#{@def_name.variable_name}' ")
         end
-        if (@f_c_arguments.length != @f_arguments.length)
-            raise("FAIL! WRONG NUMBER OF ARGUMENTS. (GIVEN #{@f_c_arguments.length} EXPECTED #{@f_arguments.length})")
+
+        @states = $our_funcs[@def_name.variable_name].recieveStates
+        @f_arguments = $our_funcs[@def_name.variable_name].recieveArgs
+        
+        if (@f_c_argument.length != @f_arguments.length)
+            raise("FAIL! WRONG NUMBER OF ARGUMENTS. (GIVEN #{@f_c_argument.length} EXPECTED #{@f_arguments.length})")
         end
     end
-    def eval()        
-        scp = $scope.incre
+    def eval()
         funcArgs_len = 0
-        funcCallArgs_len = @f_c_arguments.length
+        funcCallArgs_len = @f_c_argument.length
         while (funcArgs_len < funcCallArgs_len)
-            scp[@f_arguments[funcArgs_len].variable_name] = @f_c_arguments[funcArgs_len].eval
+            $our_vars[@f_arguments[funcArgs_len].variable_name] = @f_c_argument[funcArgs_len].eval
             funcArgs_len = funcArgs_len + 1
-        end   
+        end       
         @states.each { |state|
             if state.class == Return 
-                puts "-->> Function '#{@def_name.variable_name}' returning '#{state.eval}'"
+                return state.eval
                 break
             else
                 state.eval
             end }
-        scp.delete($scope.receiveLevel)
-        $scope.decre(scp)
-    end
-end 
-
-class Return
-    def initialize(value)
-        @value = value
-    end
-    def eval
-        return @value.eval
     end
 end
+
+class Return
+    def initialize(thing)
+        @thing = thing
+    end
+    def eval
+        return @thing.eval
+    end
+end 

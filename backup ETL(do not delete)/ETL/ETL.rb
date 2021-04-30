@@ -59,11 +59,8 @@ class Etl
             end  
 
         rule :multiple_strings do
-            match(:string_expr, "plus", :string_expr) { |str_exp1, _, str_exp2| Plus_str.new("plus", str_exp1, str_exp2) }
-            match(:id, "plus", :string_expr) { |id, _, str_exp| Plus_str.new("plus", id, str_exp) }
-            match(:string_expr, "plus", :id) { |str_exp, _, id| Plus_str.new("plus", str_exp, id) }
             match(:multiple_strings, "plus", :string_expr) { |mult_str, _, str_exp| Plus_str.new("plus", mult_str, str_exp) }
-            match(:id, "plus", :id) { |id1, _, id2| Plus_str.new("plus", id1, id2) }
+            match(:string_expr, "plus", :string_expr) { |str_exp1, _, str_exp2| Plus_str.new("plus", str_exp1, str_exp2) }
             end 
         
         rule :expr do
@@ -235,11 +232,12 @@ class Etl
 end #end för klassen
 
 checkEtl = Etl.new
-checkEtl.log(false)
 checkEtl.activate_file("etl.etl")
+
 checkEtl.output.each { |segment|
 	if segment.class != Function and segment.class != FunctionCall
-		 segment.eval()
+		segment.eval()
     end }
   
+#checkEtl.log(false)
 #checkEtl.activate_terminal
