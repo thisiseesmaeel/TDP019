@@ -1,0 +1,167 @@
+\documentclass{TDP019mall}
+\usepackage{graphicx}
+\graphicspath{{./bilder/}}
+
+
+\newcommand{\version}{Version 1.0}
+\author{Ahmed Sikh , \url{ahmsi881@student.liu.se}\\
+Sayed Ismail Safwat, \url{saysa289@student.liu.se}}
+
+\title{Språkdokumentation}
+\date{\today}
+\rhead{Ahmed Sikh\\
+Sayed Ismail Safwat}
+
+
+\begin{document}
+\begin{center}
+\includegraphics[width = 125mm]{logo}
+\end{center}
+
+\projectpage
+\tableofcontents
+\newpage
+\section{Revisionshistorik}
+\begin{table}[!h]
+\begin{tabularx}{\linewidth}{|l|X|l|}
+\hline
+Ver. & Revisionsbeskrivning & Datum \\\hline
+1.0 & Första version av Språkdokumentation & 210430 \\\hline
+\end{tabularx}
+\end{table}
+
+
+
+\section{Inledning}
+Detta är ett projekt på IP-programmet som är skapat under den andra terminen vid Linköpings universitet i kursen TDP019 Projekt: datorspråk.
+
+\subsection{Syfte}
+Syftet med denna kursen var att visa vilka komponenter ett språk består av och hur ett nytt programmeringsspråk byggs upp med de där komponenterna. 
+
+\subsection{Introduktion}
+I det här språket har tagits inspiration för det mesta från Ruby språket. ETL är utvecklats för en nybörjare användare och är skrivet i ett sätt som 
+liknar skriftligt engelska vilket gör det möjligt för språkets läsbarhet.
+
+\subsection{Målgrupp}
+ETL (Easy To Learn) språket skall passa de nybörjare som har inga tidigare förkunskaper inom programmering. Det passar perfekt dem som vill börja lära 
+sig programmering på rätt sätt som kommer täcka de mesta grunderna där en ny programmerare bör tänka på. Språket kommer även passa lärarna som vill lära
+ut programmering till de nybörjare eller möjligtvis till en grupp av barn i grundskolan.
+
+
+\section{Användarhandledning}
+
+\subsection{Installation}
+För att kunna testa ETL krävs den senaste versionen av Ruby installerad. 
+
+Användaren behöver skriva kommandoraden \textbf{\textit{ruby ETL.rb}} för att kunna köra programmet.
+
+Det finns två sätt att köra ETL språket på:
+\begin{enumerate}
+    \item Att skriva kod genom terminalen, vilket är ett sätt om användaren vill skriva endast en enkel rad kod som inte består av flera saker samtidigt.
+    Detta kan användaren göra i ETL.rb genom: se \textbf{Figur 1} i sektionen \textbf{Bilder}!.
+    \item Andra sättet är att testa språket i sin helhet vilket innebär att användaren skriver sin kod i en fil som heter \textbf{etl.etl} där kommer 
+    programmet ta hand om resten. Detta kan användaren göra i ETL.rb genom: se \textbf{Figur 2} i sektionen \textbf{Bilder}!.     
+\end{enumerate}  
+
+\newpage
+\subsection{Variabler och Tilldelning}
+Variabler har en dynamisk typning där användaren behöver inte specificera datatypen när den ska deklareras. Tilldelningen i ETL betecknas endast med 
+tilldelningsoperatorn “=”. I ETL går det att tilldela en variabel till booleska värden, strängar och matematiska uttryck.
+
+Det innebär att det ska finnas endast ett namn och dennes värde vilket visas i följande stil:
+\begin{verbatim}
+    x = 5 
+    y = "Hej"
+    z = "hej" plus "då"
+    d = 5 < 10
+\end{verbatim}
+
+
+\subsection{Matematiska Operationer}
+ETL kan utföra alla sedvanliga matematiska beräkningar såsom addition, subtraktion, multiplikation och division samt deras rätta prioriteter 
+och associativiteten det vill säga division och multiplikation ska utföras före addition och subtraktion. Samtliga beräkningar utförs oavsett 
+de är heltal eller flyttal. Språket stöder även beräkningarna inuti en parentes. Ex:
+
+\begin{verbatim}
+    (5 + 4)
+    1 - 5
+    2 * 1.0
+    5 / 5
+    4 - 7 * (10 / 2)
+\end{verbatim}
+
+Det går även att utföra matematiska beräkningar på variabler som har heltal eller flyttal som värde. Ex:
+\begin{verbatim}
+    x = 5
+    y = x + 2
+    z = x * y
+\end{verbatim}
+
+\subsection{Kommentarer}
+I språket finns det möjligheten att ignorera en rad eller flera rader ifall användaren inte vill att de raderna ska köras. 
+Detta görs genom att skriva \textbf{"< <"} för att ignorera en rad och för att ignorera fler rader måste det skrivas 
+\textbf{"<comment"} i början av raden och \textbf{"<end"} i slutet av raden.
+
+Exempel på flerradskommentar:
+\begin{verbatim}
+    <comment 
+    Detta är en flerradskommentar och allt som skrivs i det här utrymmet kommer ignoreras och inte köras. 
+    Som det syns här går det att skriva vad som helst. ?!”#€%&123456789
+    Det är jätteviktigt att inte glömma skriva <end i slutet av raden.
+    <end
+\end{verbatim}
+ 
+Exempel på enkelradskommentar:
+\begin{verbatim}
+    << Här ignoreras bara en rad som skrevs med << i början av raden.
+\end{verbatim}
+ 
+Kommenterar används ofta av programmerare som en påminnelse på hur dem har kommit fram till den specifika koden.
+ 
+
+
+\subsection{Print}
+
+\subsection{Villkor/if-satser}
+
+\subsection{Iterationer}
+
+\subsection{Funktioner}
+
+\subsection{multipleSstrings}
+
+
+
+\section{Systemdokumentation}
+
+\subsection{Lexikaliska Analys}
+
+\subsection{Parsning}
+
+
+
+\section{Reflektion}
+
+
+
+
+\section{BNF Grammatik}
+
+
+\newpage
+\section{Bilder}
+
+\begin{figure}[h]
+\caption{Exempel på hur ska det se ut när användaren vill testa språket genom terminalen}
+\centering
+\includegraphics[width=\textwidth]{activate_terminal}
+\end{figure}
+
+\begin{figure}[h]
+\caption{Exempel på hur ska det se ut när användaren vill testa språket genom en test fil}
+\centering
+\includegraphics[width=\textwidth]{activate_file}
+\end{figure}
+
+
+\end{document}

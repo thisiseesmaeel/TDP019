@@ -22,7 +22,7 @@ class Etl
       #+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- BEGIN BNF +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ 
 
         start :program do
-            match("startprogram", :statements, "endprogram") { |_, states, _| states }
+            match(:statements)
             end
  
         rule :statements do
@@ -206,7 +206,7 @@ class Etl
             puts "Bye."
         else
             parsePrinter = @etlParser.parse str
-            ##puts "=> #{parsePrinter.eval}"
+            puts "=> #{parsePrinter.eval}"
             activate_terminal
         end
     end
@@ -220,9 +220,9 @@ class Etl
         @output
     end
 
-    def for_test(string)
-        return @etlParser.parse string
-    end
+    #def for_test(string)
+    #    return @etlParser.parse string
+    #end
     
     def log(state = true)
         if state
@@ -236,10 +236,10 @@ end #end för klassen
 
 checkEtl = Etl.new
 checkEtl.log(false)
+#checkEtl.activate_terminal
 checkEtl.activate_file("etl.etl")
 checkEtl.output.each { |segment|
 	if segment.class != Function and segment.class != FunctionCall
 		 segment.eval()
     end }
   
-#checkEtl.activate_terminal

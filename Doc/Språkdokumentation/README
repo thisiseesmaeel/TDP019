@@ -1,0 +1,16 @@
+Paketinnehöll
+-------------
+Latex-klassen, de tv? bilderna som finns p? förstasidan samt ett kort
+exempel som liknar odt-mallen. 
+
+Enkel installation
+------------------
+Lägg mallen och bilderna i samma mapp som dokument som använder sig av
+mallen. Kompilera med latexmk -pvc -xelatex FILNAMN
+
+Mallinstallation
+----------------
+Om du vill installera mallen och slippa ha den i den mapp där filen
+som använder mallen finns kan du lägga mallen och bilderna n?gonstans
+i ~/texmf (tex ~/texmf/tex/latex/base/). Kör därefter kommandot
+texhash och kompilera som vanligt (latexmk -pvc -xelatex FILNAMN)

@@ -1,9 +1,6 @@
-startprogram
-
-
 y = 1
-while ( y < 6) 
-write "yes yes"
+while ( y < 4) 
+write "while loop fungerar"
 y = y + 1
 <<stop
 endwhile
@@ -11,21 +8,21 @@ endwhile
 
 x = 7
 if (x < 6) then
-write "Yes"
+write "if sats fungerar"
 otherwise
-write "No"
+write "otherwise fungerar"
 endif
 
 
 c = 10
+
 define add()
 a = 4
 b = 5
-w = 55555555555555
+w = 99999999999
 c = a + b
 return c
 enddef
-
 write add()
 
 write c
@@ -35,14 +32,10 @@ s = 2
 
 define foo(w, k)
 s = w + k 
+j = 456456456456
 return s
 enddef
-
 write foo(25, 75)
 
-write w
 write s
-write k
-
-
-endprogram 
+write j
