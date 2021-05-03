@@ -114,21 +114,219 @@ Exempel på flerradskommentar:
 Exempel på enkelradskommentar:
 \begin{verbatim}
     << Här ignoreras bara en rad som skrevs med << i början av raden.
+    << Varje rad måste ha << i början för att den ska ignoreras.
 \end{verbatim}
  
 Kommenterar används ofta av programmerare som en påminnelse på hur dem har kommit fram till den specifika koden.
- 
-
 
 \subsection{Print}
+I ETL går det att skriva ut datatyper som strängar, tal, logiska uttryck och flera strängar samtidigt förutsatt att de är tilldelade till en variabel innan utskriften. 
+För att skriva ut används ordet \textbf{write} innan variabel namnet. 
+Exempel: 
+ 
+\begin{verbatim}
+    a = “Printing should be easy!”
+    write a
+    ------------------------------
+    b = 3 < 4
+    write b
+    ------------------------------
+    c = 1234
+    write c
+\end{verbatim}
+ 
+Skriver ut följande:
 
-\subsection{Villkor/if-satser}
+\begin{verbatim}
+    -->> Printing ‘Printing should be easy!’
+    ----------------------------------------
+    -->> Printing ‘true’
+    ----------------------------------------
+    -->> Printing ‘1234’   
+\end{verbatim} 
 
-\subsection{Iterationer}
+
+\subsection{Villkor/If-satser}
+Att skriva villkor eller if-satser i ETL språket är inte avancerad. Användaren bör börja med \textbf{“if”} i början av raden, 
+sedan öppna en parentes där kan användaren skriva en eller flera logiska uttryck som kan ge \textbf{falsk} eller \textbf{sant}, efter det stänger 
+användaren parentesen och skriver därefter ordet \textbf{“then”}. Då börjar användaren på en ny rad för att skriva den satsen eller de satserna 
+som ska utföras ifall de logiska uttrycken som finns inuti parentesen ska returnera \textbf{sant}. I slutet av en if-sats ska 
+användaren skriva \textbf{“endif”} för att säga att här slutar villkoret.
+ 
+Exempel på en if-sats: 
+ 
+\begin{verbatim}
+    x = 7
+    y = 8
+    if (x > 6 and y == 8) then
+    write "if-sats är Sant"
+    endif
+\end{verbatim}
+
+Skriver ut följande:
+\begin{verbatim}
+    -->> Printing ‘if-sats är Sant’
+\end{verbatim}
+
+\newpage
+I ETL kan också användaren skriva en else-sats som följer efter en if sats. Detta kan användaren göra genom att skriva \textbf{“otherwise”} i 
+en ny rad. Det betyder att om de logiska uttrycken som finns inuti parentes returnerar \textbf{falsk}, så kommer else satsen nu utföra den eller 
+de satser som finns efter ordet \textbf{“otherwise”}. I slutet användare kommer också göra samma sak här det vill säga att skriva \textbf{“endif”} 
+för att visa att här slutar villkoret.
+ 
+Exempel på en if-sats som följer av en else-sats: 
+\begin{verbatim}
+    x = 7
+    y = 8
+    if (x less than 6 or y equal 9) then
+    write "if-sats är Sant"
+    otherwise
+    write "otherwise-sats är Sant"
+    endif
+\end{verbatim} 
+
+Skriver ut följande:
+\begin{verbatim}
+    -->> Printing ‘otherwise-sats är Sant’
+\end{verbatim}
+
+I ETL kan användaren bestämma skriva logiska operator i tecken, exempelvis: 
+
+\textbf{<}, \textbf{>}, \textbf{<=}, \textbf{>=}, \textbf{!=} och \textbf{==} 
+
+eller att skriva logiska operator i ord, exempelvis:
+
+\textbf{less than}, \textbf{greater than}, \textbf{less than or equal to}, \textbf{greater than or equal to}, \textbf{not equal to} och \textbf{equal} 
+\break 
+
+ETL kan även hantera \textbf{or}, \textbf{and} och \textbf{not}, se exemplen ovan!
+
+\subsection{Iteration}
+Det finns en sort loop i ETL språket vilket kallas för en while-loop där användaren har möjlighet att iterera igenom exempelvis ett tal tills det villkoret i loopen har uppfyllts. 
+För att skriva en while-loop skrivs först ordet \textbf{while} sedan villkoret inuti en parentes. Efter det går det att skriva den satsen eller de satserna när villkoret som finns inuti parentes uppfylls, därefter för att avsluta while-loopen måste ordet \textbf{endwhile} skrivas i en ny rad. 
+Exempel: 
+\begin{verbatim}
+    y = 1
+    while ( y < 4)
+    write "while-loop fungerar"
+    y = y + 1
+    endwhile
+\end{verbatim}
+ 
+Skriver ut följande:
+\begin{verbatim}
+    -->> Printing 'while-loop fungerar'
+    -->> Printing 'while-loop fungerar'
+    -->> Printing 'while-loop fungerar'
+\end{verbatim}
+ 
+I exemplet ovan, skrevs ut \textbf{‘while-loop fungerar’} samt lägger till en etta till variabeln \textbf{y} så länge den 
+uppfyller villkoret \textbf{(y < 4)}. Detta innebär att satserna kommer utföras tills det variabeln \textbf{y} är mindre än fyra. 
+ 
+I ETL går det även att avbryta while-loopen genom att skriva \textbf{stop} efter de satserna som ska utföras för det första gången. 
+Detta gör while-loopen att utföra de satserna endast en gång, därefter kommer det avbrytas.
+\newpage
+Exempel: 
+\begin{verbatim}
+    y = 1
+    while ( y < 4)
+    write "while-loop fungerar endast en gång"
+    y = y + 1
+    stop
+    endwhile
+\end{verbatim}
+ 
+Skriver ut följande:
+\begin{verbatim}
+    -->> Printing 'while-loop fungerar endast en gång'
+\end{verbatim}
+
 
 \subsection{Funktioner}
+ETL språket har två sorts funktioner:
+\begin{enumerate}
+\item Funktioner utan parametrar:
 
-\subsection{multipleSstrings}
+För att definiera en funktion utan parameter i ETL behöver användaren skriva \textbf{define} sedan sätta ett namn på den funktionen. 
+Därefter måste användaren skriva töm parentes så att kodraden kommer se ut så här: \textbf{define name()} i slutändan.
+ 
+Efter definitionen av funktionen kan användaren skriva en eller flera satser inuti funktionskroppen. Funktionskroppen avslutas med 
+ordet \textbf{return} beroende på vad användaren vill returnera.
+ 
+I slutet bör alltid användaren skriva ordet \textbf{enddef} för att avsluta funktionskroppen. 
+ 
+Användaren kan anropa funktionen genom att skriva exempelvis \textbf{write name()} på en ny rad, där kommer terminalen skriva 
+ut det som funktionen returnerar.  
+ 
+Exempel på funktioner utan parameter:
+\begin{verbatim}
+    define add()
+    a = 4
+    b = 5
+    c = a + b
+    return c
+    enddef
+
+    write add()
+\end{verbatim}
+ 
+Skriver ut följande:
+\begin{verbatim}
+    -->> Function 'add' returning '9'
+\end{verbatim}
+
+ 
+\item Funktioner med parametrar:
+För att definiera en funktion med parametrar i ETL behöver användaren skriva \textbf{define} sedan sätta ett namn på den funktionen. 
+Därefter måste användaren öppna en parentes för att skriva parameters namn. Funktionen kan ta flera parametrar som har kommatecken emellan. 
+Kodraden kommer se ut så här: \textbf{define name(a ,b)} i slutändan.
+ 
+Efter definitionen av funktionen kan användaren skriva en eller flera satser inuti funktionskroppen. Funktionskroppen avslutas med 
+ordet \textbf{return} beroende på vad användaren vill returnera.
+ 
+I slutet bör alltid användaren skriva ordet \textbf{enddef} för att avsluta funktionskroppen. 
+ 
+Användaren kan anropa funktionen med parametrar genom att skriva exempelvis \textbf{write name(2, 5)} på en ny rad, där parametrarna 
+som finns inuti parentesen ska ta sina värde. I slutet kommer terminalen skriva ut det som funktionen returnerar.  
+ 
+ 
+Exempel på funktioner med parameter:
+\begin{verbatim}
+    define add(a, b)
+    s = a + b
+    return s
+    enddef
+
+    write add(25, 75)
+\end{verbatim}
+Skriver ut följande:
+\begin{verbatim}
+    -->> Function 'add' returning '100'
+\end{verbatim}
+\end{enumerate}
+
+
+
+\subsection{Multiple Strings}
+ETL har en konstruktion som heter Multiple Strings. Denna finns för att låta användaren att addera två eller flera strängar med 
+varandra genom att skriva ordet \textbf{plus} mellan de strängarna som ska adderas.
+Exempel: 
+\begin{verbatim}
+    x = “ETL” plus “ är enkelt.”
+    write x
+    ------------------------------------
+    y = "ETL"
+    z = " är lätt"
+    write y plus z plus " att lära sig."
+\end{verbatim}
+ 
+Skriver ut följande:
+\begin{verbatim}
+    -->> Printing 'ETL är enkelt.'
+    -----------------------------------------
+    -->> Printing 'ETL är lätt att lära sig.'
+\end{verbatim}
+
 
 
 
@@ -141,6 +339,7 @@ Kommenterar används ofta av programmerare som en påminnelse på hur dem har ko
 
 
 \section{Reflektion}
+med scopehantering 
 
 
 

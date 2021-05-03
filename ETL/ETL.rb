@@ -62,6 +62,8 @@ class Etl
             match(:string_expr, "plus", :string_expr) { |str_exp1, _, str_exp2| Plus_str.new("plus", str_exp1, str_exp2) }
             match(:id, "plus", :string_expr) { |id, _, str_exp| Plus_str.new("plus", id, str_exp) }
             match(:string_expr, "plus", :id) { |str_exp, _, id| Plus_str.new("plus", str_exp, id) }
+            match(:multiple_strings, "plus", :id) { |mult_str, _, id| Plus_str.new("plus", mult_str, id) }
+            match(:id, "plus", :multiple_strings) { |id, _, mult_str| Plus_str.new("plus", id, mult_str) }
             match(:multiple_strings, "plus", :string_expr) { |mult_str, _, str_exp| Plus_str.new("plus", mult_str, str_exp) }
             match(:id, "plus", :id) { |id1, _, id2| Plus_str.new("plus", id1, id2) }
             end 
