@@ -8,9 +8,9 @@ class Etl
     def initialize
         @etlParser = Parser.new("ETL") do
       #+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- BEGIN TOKENS +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
-        token(/\<comment[^!]*\<end/) #matcha inte flerarads kommentarer
-        token(/(<<.+$)/) #matcha inte en rad kommentar
-        token(/\s+/)  #mellanrum ska inte matchas
+        token(/\<comment[^!]*\<end/) #parsa inte och ignorera flerarads kommentarer
+        token(/(<<.+$)/) #parsa inte och ignorera en rad kommentar
+        token(/\s+/)  #mellanrum ska inte parsas och ignoreras
         token(/(\d+[.]\d+)/) { |m| m.to_f } #floattal
         token(/\d+/) { |m| m.to_i } #heltal
         token(/'[^\']*'/) { |m| m } #sträng inom enkeltcitattecken (' ')

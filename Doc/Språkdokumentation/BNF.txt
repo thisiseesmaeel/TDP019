@@ -1,0 +1,105 @@
+<PROGRAM>     ::= <STATEMENTS>
+
+<STATEMENTS>  ::= <STATEMENTS> <STATEMENT>
+                | <STATEMENT>  
+
+<STATEMENT>   ::= <RETURN>
+                | <FUNC>
+                | <FUNCCALL>
+                | <STOP>
+                | <PRINT>
+                | <IF_BOX
+                | <WHILEITERATION>
+                | <ASSIGN>    
+
+<ASSIGN>      ::= <ID> = <BOOL_LOGIC>
+                | <ID = <MULTIPLE_STRINGS>
+                | <ID> = <STRING_EXPR>
+                | <ID> = <EXPR>
+
+<STRING_EXPR> ::= /'[^\']*'/
+                | /"[^\"]*"/
+
+##########################################################
+<MULTIPLE_STRINGS> ::= <STRING_EXPR> plus <STRING_EXPR>
+                | <STRING_EXPR> plus <STRING_EXPR>
+##########################################################
+                
+<EXPR>        ::= <EXPR> + <TERM>
+                | <EXPR> - <TERM>
+                | <TERM>
+
+<TERM>        ::= <TERM> * <ATOM> 
+                | <TERM> / <ATOM>
+                | <ATOM>
+
+<BOOL_LOGIC>  ::= <BOOL_LOGIC> and <BOOL_LOGIC>
+                | <BOOL_LOGIC> or <BOOL_LOGIC>
+                | not <BOOL_LOGIC>
+                | true
+                | false
+                | ( <BOOL_LOGIC> )
+                | <BOOL_LIST>
+
+<BOOL_LIST>   ::= <LESS_THAN>
+                | <GREATER_THAN>
+                | <LESS_THAN_OR_EQUAL_TO>
+                | <GREATER_THAN_OR_EQUAL_TO>
+                | <NOT_EQUAL_TO>
+                | <EQUAL>
+
+<LESS_THAN>   ::= <EXPR> < <EXPR>
+                | <EXPR> less than <EXPR>
+
+<GREATER_THAN> ::= <EXPR> > <EXPR>
+                | <EXPR> greater than <EXPR>
+                
+<LESS_THAN_OR_EQUAL_TO> ::= <EXPR> <= <EXPR>
+                | <EXPR> less than or equal to <EXPR>
+                
+<GREATER_THAN_OR_EQUAL_TO> ::= <EXPR> >= <EXPR>
+                | <EXPR> greater than or equal to <EXPR>                             
+
+<NOT_EQUAL_TO>::= <EXPR> != <EXPR>
+                | <EXPR> not equal to <EXPR>
+                
+<EQUAL>       ::= <EXPR> == <EXPR>
+                | <EXPR> equal <EXPR>
+
+<ID>          ::= /[a-z]+[a-z0-9_]*/
+
+<FUNC>        ::= define /[a-z]+[a-z0-9_]*/ ( <ARGUMENTS> ) <STATEMENTS> enddef
+                | define /[a-z]+[a-z0-9_]*/ ( ) <STATEMENTS> enddef
+                         
+<FUNCCALL>    ::= <ID> ( )
+                | <ID> ( <ARGUMENT> )
+
+<RETURN>      ::= return <ARGUMENT> 
+
+<ARGUMENTS>   ::= <ARGUMENTS> , <ARGUMENT>
+                | <ARGUMENT>
+
+<ARGUMENT>    ::= <MULTIPLE_STRINGS>
+                | <STRING_EXPR>
+                | <EXPR>
+                | <BOOL_LOGIC>
+
+<WHILE_LOOP>  ::= while ( <BOOL_LOGIC> ) <STATEMENTS> endwhile
+
+<STOP>        ::= stop
+
+<IF_BOX>      ::= if ( <BOOL_LOGIC> ) then <STATEMENTS> endif
+                | if ( <BOOL_LOGIC> ) then <STATEMENTS> otherwise <STATEMENTS> endif             
+                
+<PRINT>       ::= write <MULTIPLE_STRINGS>
+                | write <STRING_EXPR>
+                | write <BOOL_LOGIC>
+                | write <EXPR>
+
+<ATOM>        ::= <FUNCTION_CALL>
+                | <Float>
+                | <Integer>
+                | - <Float>
+                | - <Integer>
+                | ( <EXPR> )
+                | <ID>

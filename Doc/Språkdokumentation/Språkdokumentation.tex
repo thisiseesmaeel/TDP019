@@ -1,5 +1,13 @@
 \documentclass{TDP019mall}
 \usepackage{graphicx}
+\usepackage{color,soul}
+\usepackage{listings}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
 \graphicspath{{./bilder/}}
 
 
@@ -14,9 +22,6 @@ Sayed Ismail Safwat}
 
 
 \begin{document}
-\begin{center}
-\includegraphics[width = 125mm]{logo}
-\end{center}
 
 \projectpage
 \tableofcontents
@@ -51,7 +56,11 @@ ut programmering till de nybörjare eller möjligtvis till en grupp av barn i gr
 \section{Användarhandledning}
 
 \subsection{Installation}
-För att kunna testa ETL krävs den senaste versionen av Ruby installerad. 
+För att kunna testa ETL krävs den senaste versionen av Ruby installerad.
+
+För att kunna köra språket krävs det laddas ner. Språket kan laddas ner via länken: 
+
+\url{https://gitlab.liu.se/ahmsi881/tdp019/-/archive/master/tdp019-master.zip}
 
 Användaren behöver skriva kommandoraden \textbf{\textit{ruby ETL.rb}} för att kunna köra programmet.
 
@@ -277,6 +286,7 @@ Skriver ut följande:
 
  
 \item Funktioner med parametrar:
+
 För att definiera en funktion med parametrar i ETL behöver användaren skriva \textbf{define} sedan sätta ett namn på den funktionen. 
 Därefter måste användaren öppna en parentes för att skriva parameters namn. Funktionen kan ta flera parametrar som har kommatecken emellan. 
 Kodraden kommer se ut så här: \textbf{define name(a ,b)} i slutändan.
@@ -329,22 +339,102 @@ Skriver ut följande:
 
 
 
-
+\newpage
 \section{Systemdokumentation}
+ETL språket uppbyggt på \textbf{rdparse.rb} som är tagen från båda TDP007 och TDP019 kurshemsidan. \textbf{rdparse.rb} hjälper med att göra den lexikaliska 
+analysen samt själva parsning delen på den koden som användaren skriver. 
+
+\textbf{ETL.rb} och \textbf{classes.rb} filerna är skapade av oss senare under projektarbetet. Filen classes.rb består av alla noder 
+som används i match reglerna i ETL.rb där alla reglerna som bestämmer syntaxen är skriven i.  
+
 
 \subsection{Lexikaliska Analys}
+I lexikaliska analysen skapas de olika tokens som språket har i \textbf{ETL.rb}. Tokens består av reguljära uttryck(RegEx) som är en följd av 
+flera tecken som matchar en viss mönster. 
 
+I slutet kommer alla tokens skickas vidare till parsen. 
+
+Här kommer alla tokens i samma ordning som de är på \textbf{ETL.rb} filen:
+
+\begin{enumerate}
+
+\item \textbf{Tokens som inte ska parsas och kommer ignoreras:}
+\begin{itemize}
+
+\item Matchar och ignorerar flerradskommentarer.
+\begin{verbatim}
+    token(/\<comment[^!]*\<end/)
+\end{verbatim}
+\item Matchar och ignorerar enkelradskommentar
+\begin{verbatim}
+    token(/(<<.+$)/)
+\end{verbatim}
+\item Matchar och ignorerar alla mellanrum
+\begin{verbatim}
+    token(/\s+/)
+\end{verbatim}
+\end{itemize}
+
+\item \textbf{Tokens som ska parsas:}
+\begin{itemize}
+\item Matchar alla flyttal och returneras som "Float"
+\begin{verbatim}
+    token(/(\d+[.]\d+)/) { |m| m.to_f }
+\end{verbatim}
+\item Matchar alla heltal och returneras som "Integer"
+\begin{verbatim}
+    token(/\d+/) { |m| m.to_i }
+\end{verbatim}
+\item Matchar strängar inom enkelcitattecken
+\begin{verbatim}
+    token(/'[^\']*'/) { |m| m } 
+\end{verbatim}
+\item Matchar strängar inom dubbeltcitattecken
+\begin{verbatim}
+    token(/"[^\"]*"/) { |m| m }
+\end{verbatim}
+\item Matchar namn på variabler
+\begin{verbatim}
+    token(/[a-z]+[a-z0-9_]*/) { |m| m }
+\end{verbatim}
+\item Matchar allt annat(enkla käraktarer)
+\begin{verbatim}
+    token(/./) { |m| m } 
+\end{verbatim}
+\end{itemize}
+\end{enumerate}
+
+\newpage
 \subsection{Parsning}
+Efter att alla tokens har skickats från lexikaliska delen för parsning, och matchats de reglerna som beskriven i vår 
+BNF-grammatiken då börjar parsern gör sitt jobb som är att hitta det mönstret från det koden som användaren skriver och bygga abstrakta 
+syntaxträdet i slutet. Parsern körs rekursivt och går efter BNF-grammatiken. 
 
+Varje konstruktion i ETL språket har sin egen klass vilket varje klass har en \textbf{eval()} funktion som körs när programmet använder
+ den relevanta klassen och dennes eval funktion. 
+ 
+Exempel: (Se \textbf{Figur 3} i sektionen \textbf{Bilder}!)
+
+
+\subsection{Kodstandard}
+Språket använder sig inte av något indentering vilket innebär att alla mellanrum kommer tas bort från koden som användaren skriver. 
+
+Vissa kodstandard som \textbf{ETL} har:
+\begin{itemize}
+\item I slutet av varje \textbf{if-sats} måste användaren avstänga kroppen genom att skriva \textbf{endif}.
+\item Efter varje if-statement måste användaren skriva \textbf{then}.
+\item I slutet av varje \textbf{while-loop} måste användaren avstänga kroppen genom att skriva \textbf{endwhile}.
+\item I slutet av varje \textbf{funktion} måste användaren avstänga kroppen genom att skriva \textbf{enddef}.
+\item Booleska uttryck kan skrivas antingen i numeriskt eller skriftligt sätt. Exempel: \textbf{<} eller \textbf{less than} osv.
+\end{itemize}
 
 
 \section{Reflektion}
-med scopehantering 
-
-
+kanske med scopehantering (vi får se)
 
 
 \section{BNF Grammatik}
+\lstinputlisting[language=Ruby]{BNF.txt}
 
 
 \newpage
@@ -362,5 +452,12 @@ med scopehantering
 \includegraphics[width=\textwidth]{activate_file}
 \end{figure}
 
+\newpage
+\begin{figure}[h]
+\caption{Här parsas en konstruktion där flera strängar adderas med varandra med hjälp av klass objektet som skapas av klassen \textbf{Plus\_str}.\\ \\}
+\centering
+\includegraphics[width=110mm]{tree}
+\end{figure}
+    
 
 \end{document}

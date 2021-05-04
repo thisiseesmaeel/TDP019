@@ -26,6 +26,7 @@
 \pagestyle{fancy}
 \newlength{\borderwidth}
 \setlength{\borderwidth}{3cm}
+  
 
 \renewcommand{\maketitlehooka}{%
   \begin{tikzpicture}[overlay]
@@ -35,7 +36,12 @@
    \end{tikzpicture}
    }
 
-\pretitle{\begin{center}{\color{Blue}\usefont{T1}{arial}{bx}{n}\fontsize{28pt}{1em}\selectfont TDP019 Projekt: Datorspråk\\[.3em] ETL\\[.3em] (Easy To Learn) }\end{center}\vspace{100pt}\begin{center}\Huge\bfseries}
+
+\pretitle{\begin{center}
+  \begin{center}
+    \includegraphics[width = 70mm]{logo}
+  \end{center} 
+{\color{Blue}\usefont{T1}{arial}{bx}{n}\fontsize{28pt}{1em}\selectfont TDP019 Projekt: Datorspråk}\end{center}\vspace{100pt}\begin{center}\Huge\bfseries}
 \posttitle{\end{center}}
 \preauthor{\begin{center}\large Författare\end{center}\begin{center}\normalsize}
 \postauthor{\end{center}\vfill}
@@ -53,5 +59,4 @@
     \maketitle%
   \end{titlingpage}%
 }
-
 \endinput
