@@ -1,9 +1,9 @@
 # Fdb version 3
-["xdvipdfmx"] 1620143116 "Språkdokumentation.xdv" "Språkdokumentation.pdf" "Språkdokumentation" 1620143116
-  "Språkdokumentation.xdv" 1620143116 230152 bb18613c032bbf69236a58751333e957 "xelatex"
+["xdvipdfmx"] 1620226486 "Språkdokumentation.xdv" "Språkdokumentation.pdf" "Språkdokumentation" 1620226487
+  "Språkdokumentation.xdv" 1620226486 810980 738745e90d0906d48e76ff30beea995f "xelatex"
   (generated)
   "Språkdokumentation.pdf"
-["xelatex"] 1620143115 "Språkdokumentation.tex" "Språkdokumentation.xdv" "Språkdokumentation" 1620143116
+["xelatex"] 1620226485 "Språkdokumentation.tex" "Språkdokumentation.xdv" "Språkdokumentation" 1620226487
   "/etc/texmf/web2c/texmf.cnf" 1599046495 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
@@ -148,11 +148,14 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1581979058 38841 ce3692aa899bb693b90b87eaa5d4d84e ""
   "/usr/share/texmf/web2c/texmf.cnf" 1581979058 38841 ce3692aa899bb693b90b87eaa5d4d84e ""
   "/var/lib/texmf/web2c/xetex/xelatex.fmt" 1599046553 4646035 12cee8c2cebc6606b74e83b87f71e758 ""
-  "BNF.txt" 1620143072 3153 fc97bd4797699df581ab8c4b3bf8afc5 ""
-  "Språkdokumentation.aux" 1620143116 4135 da97019250526b4787467fab1f52095f "xelatex"
-  "Språkdokumentation.out" 1620143116 1296 b8a2fa02882ddd8dba0ddf886e7c429d "xelatex"
-  "Språkdokumentation.tex" 1620143115 16926 953a5776b60725181f456c1df80d1f5f ""
-  "Språkdokumentation.toc" 1620143116 1691 0c3d2ca085a1c2e4ec2c1011e2dee937 "xelatex"
+  "ETL/BNF.txt" 1620224148 3121 da646adfc3fc35104236aaa3c49a029d ""
+  "ETL/ETL.rb" 1620226483 9733 5e25fe44cbddb3940c43d86934b48366 ""
+  "ETL/classes.rb" 1620226217 7448 aced979fcfb12186441894dbcb97e68f ""
+  "ETL/etl.etl" 1620226328 545 e592f3051211f4ae5ddf5856ae9e7402 ""
+  "Språkdokumentation.aux" 1620226486 4908 3d2d86f1f0cb09543dabde8ac719e525 "xelatex"
+  "Språkdokumentation.out" 1620226486 1526 db78daa64b88c98c5f7e36388cfb7309 "xelatex"
+  "Språkdokumentation.tex" 1620225865 22584 316394c4b4bbe7448f9e9b09cd86a9ae ""
+  "Språkdokumentation.toc" 1620226486 1990 596cfd40770d0224803532b3b55a3f59 "xelatex"
   "TDP019mall.cls" 1620126854 1962 c00133755d9256cf4834f30fd4707733 ""
   "bilder/activate_file.png" 1619793581 29199 73bc3d556c15178e740ff6efc737076a ""
   "bilder/activate_terminal.png" 1619792771 30417 76dfd55a385094bb955199cc2bc7e52a ""
@@ -161,8 +164,8 @@
   "ida.png" 1411557188 7786 f8e6fdcd3fff5911dca9765ffa4de313 ""
   "lith.png" 1473074252 15882 4db45f42034d096c9aba5be88636d034 ""
   (generated)
-  "Språkdokumentation.log"
-  "Språkdokumentation.xdv"
   "Språkdokumentation.toc"
-  "Språkdokumentation.aux"
+  "Språkdokumentation.xdv"
+  "Språkdokumentation.log"
   "Språkdokumentation.out"
+  "Språkdokumentation.aux"

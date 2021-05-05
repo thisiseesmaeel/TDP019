@@ -20,10 +20,10 @@
 <STRING_EXPR> ::= /'[^\']*'/
                 | /"[^\"]*"/
 
-##########################################################
 <MULTIPLE_STRINGS> ::= <STRING_EXPR> plus <STRING_EXPR>
-                | <STRING_EXPR> plus <STRING_EXPR>
-##########################################################
+                | < MULTIPLE_STRINGS> plus <STRING_EXPR>
+                | <ID> plus <ID>
+                | <MULTIPLE_STRINGS> plus <ID>
                 
 <EXPR>        ::= <EXPR> + <TERM>
                 | <EXPR> - <TERM>
