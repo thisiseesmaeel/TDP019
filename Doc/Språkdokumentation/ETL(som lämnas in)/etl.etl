@@ -42,17 +42,17 @@ write s
 write j
 
 
-n = " Ahmed"
-b = " Ismail"
+n = "Ahmed Sikh"
+b = "Ismail"
 v = " !!"
 
-write "Hej" plus " man"
+write "Hej" plus " på dig"
 
-write "Bra" plus " jobbat" plus " ni"
+write "ETL" plus " är" plus " lätt"
 
 write b plus v
 
-write b plus v plus n
+write n plus v plus b
 
 
 

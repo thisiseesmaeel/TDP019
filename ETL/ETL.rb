@@ -218,10 +218,6 @@ class Etl
         ##puts "=> #{output.eval}"
         @output
     end
-
-    #def for_test(string)
-    #    return @etlParser.parse string
-    #end
     
     def log(state = true)
         if state
