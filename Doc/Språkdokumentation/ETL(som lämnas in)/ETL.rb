@@ -8,8 +8,8 @@ class Etl
     def initialize
         @etlParser = Parser.new("ETL") do
       #+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- BEGIN TOKENS +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
-        token(/\<comment[^!]*\<end/) #parsa inte och ignorera flerarads kommentarer
-        token(/(<<.+$)/) #parsa inte och ignorera en rad kommentar
+        token(/\<comment[^!]*\<end/) #parsa inte och ignorera flerradskommentarer
+        token(/(<<.+$)/) #parsa inte och ignorera enradskommentar
         token(/\s+/)  #mellanrum ska inte parsas och ignoreras
         token(/(\d+[.]\d+)/) { |m| m.to_f } #floattal
         token(/\d+/) { |m| m.to_i } #heltal
@@ -26,7 +26,7 @@ class Etl
             end
  
         rule :statements do
-            match(:statements,:statement){|states, state| [states, state].flatten}
+            match(:statements, :statement){ |states, state| [states, state].flatten }
             match(:statement)
         end 
 
@@ -36,13 +36,9 @@ class Etl
             match(:funcCall)
             match(:stop) 
             match(:print)
-            ##match(:bool_logic)
             match(:if_box) 
             match(:whileIteration)
             match(:assign)
-            ##match(:multiple_strings)
-            ##match(:string_expr)
-            ##match(:expr)
             end
 
         rule :assign do
@@ -53,9 +49,8 @@ class Etl
             end
 
         rule :string_expr do
-            match(/'[^\']*'/) { |string| str = Constant.new(string[1, string.length-2]) }
-            match(/"[^\"]*"/) { |string| str = Constant.new(string[1, string.length-2]) }
-            #match(:funcCall)
+            match(/'[^\']*'/) { |string| Constant.new(string[1, string.length-2]) }
+            match(/"[^\"]*"/) { |string| Constant.new(string[1, string.length-2]) }
             end  
 
         rule :multiple_strings do
@@ -74,7 +69,8 @@ class Etl
         rule :term do
             match(:term, '*', :atom) { |term, _, atom| Expr.new('*', term, atom) }
             match(:term, '/', :atom) { |term, _, atom| Expr.new('/', term, atom) }
-            #match(:funcCall)
+            match(:term, '^', :atom) { |term, _, atom| Expr.new('^', term, atom) }
+            match(:term, '%', :atom) { |term, _, atom| Expr.new('%', term, atom) }
             match(:atom)
             end
             
@@ -147,15 +143,13 @@ class Etl
             end
 
         rule :arguments do
-            match(:arguments,',',:argument){|args,_,arg| [args, arg].flatten}
+            match(:arguments, ',', :argument){ |args,_,arg| [args, arg].flatten }
             match(:argument)
             end  
 
         rule :argument do
-            match(:multiple_strings)
             match(:string_expr)
             match(:expr)
-            match(:bool_logic)
             end  
 
         rule :whileIteration do
@@ -189,7 +183,7 @@ class Etl
             match(:id)
             end
             
-        end #end för alla rules
+        end #end för all grammatik
     #+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- END BNF +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     end #end för initialize  
       
@@ -237,4 +231,3 @@ checkEtl.output.each { |segment|
 	if segment.class != Function and segment.class != FunctionCall
 		 segment.eval()
     end }
-  

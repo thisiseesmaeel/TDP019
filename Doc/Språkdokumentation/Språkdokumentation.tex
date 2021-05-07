@@ -58,7 +58,7 @@ Sayed Ismail Safwat}
 \begin{tabularx}{\linewidth}{|l|X|l|}
 \hline
 Ver. & Revisionsbeskrivning & Datum \\\hline
-1.0 & Första version av Språkdokumentation & 210505 \\\hline
+1.0 & Första version av Språkdokumentation & 210507 \\\hline
 \end{tabularx}
 \end{table}
 
@@ -114,9 +114,11 @@ Det innebär att det ska finnas endast ett namn och dennes värde vilket visas i
 
 
 \subsection{Matematiska Operationer}
-ETL kan utföra alla sedvanliga matematiska beräkningar såsom addition, subtraktion, multiplikation och division samt deras rätta prioriteter 
-och associativiteten det vill säga division och multiplikation ska utföras före addition och subtraktion. Samtliga beräkningar utförs oavsett 
-de är heltal eller flyttal. Språket stöder även beräkningarna inuti en parentes. Ex:
+ETL kan utföra alla sedvanliga matematiska beräkningar såsom addition, subtraktion, multiplikation, division, potenser och modolo 
+samt deras rätta prioriteter och associativiteten det vill säga division och multiplikation ska utföras före addition och subtraktion. 
+Samtliga beräkningar utförs oavsett de är heltal eller flyttal. Språket stöder även beräkningarna inuti en parentes. 
+
+Exempel:
 
 \begin{verbatim}
     (5 + 4)
@@ -124,6 +126,8 @@ de är heltal eller flyttal. Språket stöder även beräkningarna inuti en pare
     2 * 1.0
     5 / 5
     4 - 7 * (10 / 2)
+    5 ^ 2
+    10 % 3
 \end{verbatim}
 
 Det går även att utföra matematiska beräkningar på variabler som har heltal eller flyttal som värde. Ex:
@@ -135,7 +139,7 @@ Det går även att utföra matematiska beräkningar på variabler som har heltal
 
 \subsection{Kommentarer}
 I språket finns det möjligheten att ignorera en rad eller flera rader ifall användaren inte vill att de raderna ska köras. 
-Detta görs genom att skriva \textbf{"< <"} för att ignorera en rad och för att ignorera fler rader måste det skrivas 
+Detta görs genom att skriva \textbf{"<<"} för att ignorera en rad och för att ignorera fler rader måste det skrivas 
 \textbf{"<comment"} i början av raden och \textbf{"<end"} i slutet av raden.
 
 Exempel på flerradskommentar:
@@ -345,27 +349,35 @@ Skriver ut följande:
 
 
 \subsection{Multiple Strings}
-ETL har en konstruktion som heter Multiple Strings. Denna finns för att låta användaren att addera två eller flera strängar med 
-varandra genom att skriva ordet \textbf{plus} mellan de strängarna som ska adderas.
-Exempel: 
+ETL har en konstruktion som heter Multiple Strings. Denna finns för att låta användaren att addera antingen två eller flera variabler som innehåller strängar 
+(som i Exempel 1) eller två eller flera strängar (som i Exempel 2) med varandra genom att skriva ordet \textbf{plus} mellan de variablerna/strängarna som ska adderas.
+
+Exempel 1: 
 \begin{verbatim}
     x = “ETL” plus “ är enkelt.”
     write x
-    ------------------------------------
+\end{verbatim}
+Skriver ut följande:
+\begin{verbatim}
+    -->> Printing 'ETL är enkelt.'
+\end{verbatim}
+
+Exempel 2:
+
+\begin{verbatim}
     y = "ETL"
-    z = " är lätt"
-    write y plus z plus " att lära sig."
+    z = " är"
+    w = " lätt att lära sig!"
+    write y plus z plus w
 \end{verbatim}
  
 Skriver ut följande:
 \begin{verbatim}
-    -->> Printing 'ETL är enkelt.'
-    -----------------------------------------
-    -->> Printing 'ETL är lätt att lära sig.'
+    -->> Printing 'ETL är lätt att lära sig!'
 \end{verbatim}
 
 
-
+\newpage
 \section{Systemdokumentation}
 ETL språket uppbyggt på \textbf{rdparse.rb} som är tagen från båda TDP007 och TDP019 kurshemsidan. \textbf{rdparse.rb} hjälper med att göra den lexikaliska 
 analysen samt själva parsning delen på den koden som användaren skriver. 
@@ -373,13 +385,11 @@ analysen samt själva parsning delen på den koden som användaren skriver.
 \textbf{ETL.rb} och \textbf{classes.rb} filerna är skapade av oss senare under projektarbetet. Filen classes.rb består av alla noder 
 som används i match reglerna i ETL.rb där alla reglerna som bestämmer syntaxen är skriven i.  
 
-
 \subsection{Lexikaliska Analys}
 I lexikaliska analysen skapas de olika tokens som språket har i \textbf{ETL.rb}. Tokens består av reguljära uttryck(RegEx) som är en följd av 
 flera tecken som matchar en viss mönster. 
 
 I slutet kommer alla tokens skickas vidare till parsen. 
-\newpage
 
 Här kommer alla tokens i samma ordning som de är på \textbf{ETL.rb} filen:
 
@@ -431,6 +441,7 @@ Här kommer alla tokens i samma ordning som de är på \textbf{ETL.rb} filen:
 \end{itemize}
 \end{enumerate}
 
+\newpage
 \subsection{Parsning}
 Efter att alla tokens har skickats från lexikaliska delen för parsning, och matchats de reglerna som beskriven i vår 
 BNF-grammatiken då börjar parsern gör sitt jobb som är att hitta det mönstret från det koden som användaren skriver och bygga abstrakta 
@@ -441,7 +452,6 @@ Varje konstruktion i ETL språket har sin egen klass vilket varje klass har en \
  
 Exempel: (Se \textbf{Figur 3} i sektionen \textbf{Bilder}!)
 
-\newpage
 \subsection{Kodstandard}
 Språket använder sig inte av något indentering vilket innebär att alla mellanrum kommer tas bort från koden som användaren skriver. 
 
@@ -454,6 +464,7 @@ Vissa kodstandard som \textbf{ETL} har:
 \item Booleska uttryck kan skrivas antingen i numeriskt eller skriftligt sätt. Exempel: \textbf{<} eller \textbf{less than} osv.
 \end{itemize}
 
+\newpage
 \section{Reflektion}
 I denna kursen var vi ombedd att skapa ett nytt programmeringsspråk och med våra kunskaper från tidigare kursen kändes det mycket svårt
  att tänka på hur och varifrån ska man börja med att skriva eller implementera. Det var lite svårt i början, eftersom man vet inte om man

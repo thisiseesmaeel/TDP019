@@ -1,5 +1,5 @@
 y = 1
-while ( y < 4) 
+while (y < 5)
 write "while loop fungerar"
 y = y + 1
 <<stop
@@ -9,7 +9,7 @@ endwhile
 x = 7
 u = 8
 if (x > 6 and u equal 8) then
-write "if sats fungerar"
+write "if-sats fungerar"
 otherwise
 write "otherwise fungerar"
 endif
@@ -43,8 +43,8 @@ write j
 
 
 n = "Ahmed Sikh"
-b = "Ismail"
-v = " !!"
+b = " Ismail"
+v = " !"
 
 write "Hej" plus " på dig"
 
@@ -55,6 +55,6 @@ write b plus v
 write n plus v plus b
 
 
+write 5 ^ 2
 
-
-
+write 10 % 3

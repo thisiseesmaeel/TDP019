@@ -75,6 +75,10 @@ class Expr
                 return lhs.eval * rhs.eval 
             when '/'
                 return lhs.eval / rhs.eval
+            when '^'
+                return lhs.eval ** rhs.eval
+            when '%'
+                return lhs.eval % rhs.eval
             else nil
         end
     end
@@ -213,7 +217,7 @@ class If
     def eval()
         if @bool_logic.eval()
             @states.eval()
-        else @otherwise_states != nil
+        elsif @otherwise_states != nil
             @otherwise_states.eval()
         end
     end
@@ -229,8 +233,7 @@ class While
         check_stop = false
 	    while @bool_logic.eval
             @states.each { |segment|
-            value = segment.eval()
-            if (value == "stop")
+            if (segment.eval() == "stop")
                 check_stop = true
             end }
             if (check_stop == true)
