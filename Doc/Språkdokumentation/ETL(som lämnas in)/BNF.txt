@@ -89,7 +89,8 @@
 <STOP>        ::= stop
 
 <IF_BOX>      ::= if ( <BOOL_LOGIC> ) then <STATEMENTS> endif
-                | if ( <BOOL_LOGIC> ) then <STATEMENTS> otherwise <STATEMENTS> endif             
+                | if ( <BOOL_LOGIC> ) then <STATEMENTS> otherwise <STATEMENTS> endif     
+                | if ( <BOOL_LOGIC> ) then <STATEMENTS> elseif ( <BOOL_LOGIC> ) then <STATEMENTS> otherwise <STATEMENTS> endif           
                 
 <PRINT>       ::= write <MULTIPLE_STRINGS>
                 | write <STRING_EXPR>

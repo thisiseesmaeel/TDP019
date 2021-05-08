@@ -18,9 +18,8 @@ class Etl
         token(/[a-z]+[a-z0-9_]*/) { |m| m } #namn på variabler
         token(/./) { |m| m } #allt annat(enkla käraktarer)
       #+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- END TOKENS +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
-
+      
       #+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- BEGIN BNF +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ 
-
         start :program do
             match(:statements)
             end
@@ -164,6 +163,8 @@ class Etl
             match("if", "(", :bool_logic, ")", "then", :statements, "endif") { |_, _, bool_log, _, _, if_states, _| If.new(bool_log, if_states) }
             match("if", "(", :bool_logic, ")", "then", :statements, "otherwise", :statements, "endif") { |_, _, bool_log, _, _, if_states, _, else_states, _| 
                 If.new(bool_log, if_states, else_states) }
+            match("if", "(", :bool_logic, ")", "then", :statements, "elseif", "(", :bool_logic, ")", "then", :statements, "otherwise", :statements, "endif") { |_, _, bool_log, _, _, if_states, _, _, elsif_bool_log, _, _, elsif_state, _, else_states, _| 
+                If.new(bool_log, if_states, elsif_bool_log, elsif_state, else_states) }
             end    
 
         rule :print do
@@ -209,7 +210,6 @@ class Etl
         @output = []
         etl_file = File.read(etl_file)
         @output = @etlParser.parse(etl_file)
-        ##puts "=> #{output.eval}"
         @output
     end
     

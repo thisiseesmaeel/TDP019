@@ -14,6 +14,27 @@ otherwise
 write "otherwise fungerar"
 endif
 
+i = 2
+h = 10
+if (i != 2) then
+write "if-sats fungerar"
+elseif (h == 10) then
+write "elseif-sats fungerar"
+otherwise
+write "otherwise fungerar"
+endif
+
+r = 2
+t = 10
+if (r != 2) then
+write "if-sats fungerar"
+elseif (t != 10) then
+write "elseif-sats fungerar"
+otherwise
+write "otherwise fungerar"
+endif
+
+
 
 c = 10
 

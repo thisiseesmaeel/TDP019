@@ -30,7 +30,6 @@ end
 
 $scope = ScopeHandler.new
 
-
 def look_up(variable, our_vars)
     levelNr = $scope.receiveLevel
     if our_vars == $scope.receiveHolder
@@ -208,20 +207,25 @@ class Print
 end
 
 class If
-    attr_accessor :bool_logic, :states, :otherwise_states
-    def initialize(bool_logic, states, otherwise_states = nil)
-        @bool_logic = bool_logic
+    attr_accessor :if_bool_logic, :states, :elsif_bool_logic, :elsif_state, :otherwise_states
+    def initialize(if_bool_logic, states, elsif_bool_logic = nil, elsif_state = nil, otherwise_states = nil)
+        @if_bool_logic = if_bool_logic
         @states = states
+        @elsif_bool_logic = elsif_bool_logic
+        @elsif_state = elsif_state
         @otherwise_states = otherwise_states
     end
     def eval()
-        if @bool_logic.eval()
+        if @if_bool_logic.eval()
             @states.eval()
+        elsif @elsif_bool_logic.eval()
+                @elsif_state.eval()
         elsif @otherwise_states != nil
             @otherwise_states.eval()
         end
     end
 end 
+
 
 class While
     attr_accessor :bool_logic, :states

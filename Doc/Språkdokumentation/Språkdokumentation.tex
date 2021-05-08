@@ -58,7 +58,7 @@ Sayed Ismail Safwat}
 \begin{tabularx}{\linewidth}{|l|X|l|}
 \hline
 Ver. & Revisionsbeskrivning & Datum \\\hline
-1.0 & Första version av Språkdokumentation & 210507 \\\hline
+1.0 & Första version av Språkdokumentation & 210508 \\\hline
 \end{tabularx}
 \end{table}
 
@@ -200,34 +200,59 @@ Exempel på en if-sats:
     x = 7
     y = 8
     if (x > 6 and y == 8) then
-    write "if-sats är Sant"
+    write "if-sats fungerar"
     endif
 \end{verbatim}
 
 Skriver ut följande:
 \begin{verbatim}
-    -->> Printing ‘if-sats är Sant’
+    -->> Printing ‘if-sats fungerar’
 \end{verbatim}
 
-I ETL kan också användaren skriva en else-sats som följer efter en if sats. Detta kan användaren göra genom att skriva \textbf{“otherwise”} i 
-en ny rad. Det betyder att om de logiska uttrycken som finns inuti parentes returnerar \textbf{falsk}, så kommer else satsen nu utföra den eller 
-de satser som finns efter ordet \textbf{“otherwise”}. I slutet användare kommer också göra samma sak här det vill säga att skriva \textbf{“endif”} 
-för att visa att här slutar villkoret.
+I ETL kan användaren skriva en elseif-sats som följer av en if sats. Detta kan användaren göra genom att skriva \textbf{"elseif"} i 
+en ny rad. Det betyder att om de logiska uttrycken som finns inuti \textbf{if-sats} parentes returnerar \textbf{falsk}, 
+så kommer \textbf{elseif-satsen} nu utföra den eller de satserna som finns efter ordet \textbf{“elseif”}. 
+
 \newpage
+Exempel på en elseif-sats: 
+
+\begin{verbatim}
+    j = 2
+    if (j != 2) then
+    write "if-sats fungerar"
+    elseif (j == 2) then
+    write "elseif-sats fungerar"
+    otherwise
+    write "otherwise fungerar"
+    endif
+\end{verbatim}
+
+Skriver ut följande:
+\begin{verbatim}
+    -->> Printing 'elseif-sats fungerar' 
+\end{verbatim}
+
+I ETL kan också användaren skriva en \textbf{else-sats} som följer av antingen en \textbf{if-sats} eller \textbf{elseif-sats}. 
+Detta kan användaren göra genom att skriva \textbf{“otherwise”} i 
+en ny rad. Det betyder att om de logiska uttrycken som finns inuti \textbf{if-sats} eller \textbf{elseif-sats} parentesen returnerar \textbf{falsk}, 
+så kommer \textbf{else-satsen} nu utföra den eller 
+de satser som finns efter ordet \textbf{“otherwise”}. I slutet användaren kommer också göra samma sak här det vill säga att skriva \textbf{“endif”} 
+för att visa att här slutar villkoret.
+
 Exempel på en if-sats som följer av en else-sats: 
 \begin{verbatim}
     x = 7
     y = 8
     if (x less than 6 or y equal 9) then
-    write "if-sats är Sant"
+    write "if-sats fungerar"
     otherwise
-    write "otherwise-sats är Sant"
+    write "otherwise-sats fungerar"
     endif
 \end{verbatim} 
 
 Skriver ut följande:
 \begin{verbatim}
-    -->> Printing ‘otherwise-sats är Sant’
+    -->> Printing ‘otherwise-sats fungerar’
 \end{verbatim}
 
 I ETL kan användaren bestämma skriva logiska operator i tecken, exempelvis: 
@@ -241,6 +266,7 @@ eller att skriva logiska operator i ord, exempelvis:
 
 ETL kan även hantera \textbf{or}, \textbf{and} och \textbf{not}, se exemplen ovan!
 
+\newpage
 \subsection{Iteration}
 Det finns en sort loop i ETL språket vilket kallas för en while-loop där användaren har möjlighet att iterera igenom exempelvis ett tal tills det villkoret i loopen har uppfyllts. 
 För att skriva en while-loop skrivs först ordet \textbf{while} sedan villkoret inuti en parentes. Efter det går det att skriva den satsen eller de satserna när villkoret som finns inuti parentes uppfylls, därefter för att avsluta while-loopen måste ordet \textbf{endwhile} skrivas i en ny rad. 
@@ -265,7 +291,7 @@ uppfyller villkoret \textbf{(y < 4)}. Detta innebär att satserna kommer utföra
  
 I ETL går det även att avbryta while-loopen genom att skriva \textbf{stop} efter de satserna som ska utföras för det första gången. 
 Detta gör while-loopen att utföra de satserna endast en gång, därefter kommer det avbrytas.
-\newpage
+
 Exempel: 
 \begin{verbatim}
     y = 1
@@ -297,7 +323,8 @@ I slutet bör alltid användaren skriva ordet \textbf{enddef} för att avsluta f
  
 Användaren kan anropa funktionen genom att skriva exempelvis \textbf{write name()} på en ny rad, där kommer terminalen skriva 
 ut det som funktionen returnerar.  
- 
+
+\newpage
 Exempel på funktioner utan parameter:
 \begin{verbatim}
     define add()
@@ -347,7 +374,7 @@ Skriver ut följande:
 \end{enumerate}
 
 
-
+\newpage
 \subsection{Multiple Strings}
 ETL har en konstruktion som heter Multiple Strings. Denna finns för att låta användaren att addera antingen två eller flera variabler som innehåller strängar 
 (som i Exempel 1) eller två eller flera strängar (som i Exempel 2) med varandra genom att skriva ordet \textbf{plus} mellan de variablerna/strängarna som ska adderas.
