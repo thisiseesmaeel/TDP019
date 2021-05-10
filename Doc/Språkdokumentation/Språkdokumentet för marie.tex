@@ -1,7 +1,6 @@
 \documentclass{TDP019mall}
 \usepackage{graphicx}
 \usepackage{color,soul}
-\usepackage{listings}
 \usepackage{xcolor}
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -9,32 +8,6 @@
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
 
-\lstdefinestyle{mystile}{
-    backgroundcolor=\color{backcolour},   
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\ttfamily\footnotesize,
-    breakatwhitespace=true,         
-    breaklines=true,                 
-    captionpos=b,                    
-    keepspaces=true,                 
-    numbers=left,                    
-    numbersep=5pt,                  
-    showspaces=false,                
-    showstringspaces=false,
-    showtabs=false,                  
-    tabsize=2
-}
-
-\lstset{style=mystile}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=black,
-    filecolor=magenta,
-    urlcolor=cyan,
-}
 \graphicspath{{./bilder/}}
 
 
@@ -89,7 +62,7 @@ För att kunna köra språket krävs det laddas ner. Språket kan laddas ner via
 
 \url{https://gitlab.liu.se/ahmsi881/tdp019/-/archive/master/tdp019-master.zip}
 
-Användaren behöver skriva kommandoraden \textbf{\textit{ruby ETL.rb}} för att kunna köra programmet.
+Användaren behöver skriva kommandoraden \textbf{\textit{ruby ETL.rb}} i terminalen för att kunna köra programmet.
 
 Det finns två sätt att köra ETL språket på:
 \begin{enumerate}
@@ -139,7 +112,7 @@ Det går även att utföra matematiska beräkningar på variabler som har heltal
 
 \subsection{Kommentarer}
 I språket finns det möjligheten att ignorera en rad eller flera rader ifall användaren inte vill att de raderna ska köras. 
-Detta görs genom att skriva \textbf{"<<"} för att ignorera en rad och för att ignorera fler rader måste det skrivas 
+Detta görs genom att skriva \textbf{"<<"} för att ignorera en rad. För att ignorera fler rader måste det skrivas 
 \textbf{"<comment"} i början av raden och \textbf{"<end"} i slutet av raden.
 
 Exempel på flerradskommentar:
@@ -405,161 +378,6 @@ Skriver ut följande:
 
 
 \newpage
-\section{Systemdokumentation}
-ETL språket uppbyggt på \textbf{rdparse.rb} som är tagen från båda TDP007 och TDP019 kurshemsidan. \textbf{rdparse.rb} hjälper med att göra den lexikaliska 
-analysen samt själva parsning delen på den koden som användaren skriver. 
-
-\textbf{ETL.rb} och \textbf{classes.rb} filerna är skapade av oss senare under projektarbetet. Filen classes.rb består av alla noder 
-som används i match reglerna i ETL.rb där alla reglerna som bestämmer syntaxen är skriven i.  
-
-\subsection{Lexikaliska Analys}
-I lexikaliska analysen skapas de olika tokens som språket har i \textbf{ETL.rb}. Tokens består av reguljära uttryck(RegEx) som är en följd av 
-flera tecken som matchar en viss mönster. 
-
-I slutet kommer alla tokens skickas vidare till parsen. 
-
-Här kommer alla tokens i samma ordning som de är på \textbf{ETL.rb} filen:
-
-\begin{enumerate}
-
-\item \textbf{Tokens som inte ska parsas och kommer ignoreras:}
-\begin{itemize}
-
-\item Matchar och ignorerar flerradskommentarer.
-\begin{verbatim}
-    token(/\<comment[^!]*\<end/)
-\end{verbatim}
-\item Matchar och ignorerar enkelradskommentar
-\begin{verbatim}
-    token(/(<<.+$)/)
-\end{verbatim}
-\item Matchar och ignorerar alla mellanrum
-\begin{verbatim}
-    token(/\s+/)
-\end{verbatim}
-\end{itemize}
-
-\item \textbf{Tokens som ska parsas:}
-\begin{itemize}
-\item Matchar alla flyttal och returneras som "Float"
-\begin{verbatim}
-    token(/(\d+[.]\d+)/) { |m| m.to_f }
-\end{verbatim}
-\item Matchar alla heltal och returneras som "Integer"
-\begin{verbatim}
-    token(/\d+/) { |m| m.to_i }
-\end{verbatim}
-\item Matchar strängar inom enkelcitattecken
-\begin{verbatim}
-    token(/'[^\']*'/) { |m| m } 
-\end{verbatim}
-\item Matchar strängar inom dubbeltcitattecken
-\begin{verbatim}
-    token(/"[^\"]*"/) { |m| m }
-\end{verbatim}
-\item Matchar namn på variabler
-\begin{verbatim}
-    token(/[a-z]+[a-z0-9_]*/) { |m| m }
-\end{verbatim}
-\item Matchar allt annat(enkla käraktarer)
-\begin{verbatim}
-    token(/./) { |m| m } 
-\end{verbatim}
-\end{itemize}
-\end{enumerate}
-
-\newpage
-\subsection{Parsning}
-Efter att alla tokens har skickats från lexikaliska delen för parsning, och matchats de reglerna som beskriven i vår 
-BNF-grammatiken då börjar parsern gör sitt jobb som är att hitta det mönstret från det koden som användaren skriver och bygga abstrakta 
-syntaxträdet i slutet. Parsern körs rekursivt och går efter BNF-grammatiken. 
-
-Varje konstruktion i ETL språket har sin egen klass vilket varje klass har en \textbf{eval()} funktion som körs när programmet använder
- den relevanta klassen och dennes eval funktion. 
- 
-Exempel: (Se \textbf{Figur 3} i sektionen \textbf{Bilder}!)
-
-\subsection{Kodstandard}
-Språket använder sig inte av något indentering vilket innebär att alla mellanrum kommer tas bort från koden som användaren skriver. 
-
-Vissa kodstandard som \textbf{ETL} har:
-\begin{itemize}
-\item I slutet av varje \textbf{if-sats} måste användaren avstänga kroppen genom att skriva \textbf{endif}.
-\item Efter varje if-statement måste användaren skriva \textbf{then}.
-\item I slutet av varje \textbf{while-loop} måste användaren avstänga kroppen genom att skriva \textbf{endwhile}.
-\item I slutet av varje \textbf{funktion} måste användaren avstänga kroppen genom att skriva \textbf{enddef}.
-\item Booleska uttryck kan skrivas antingen i numeriskt eller skriftligt sätt. Exempel: \textbf{<} eller \textbf{less than} osv.
-\end{itemize}
-
-\newpage
-\section{Reflektion}
-I denna kursen var vi ombedd att skapa ett nytt programmeringsspråk och med våra kunskaper från tidigare kursen kändes det mycket svårt
- att tänka på hur och varifrån ska man börja med att skriva eller implementera. Det var lite svårt i början, eftersom man vet inte om man
-  gör rätt eller fel osv, kanske för att man inte kunde testa allt man skriver precis som vi gjorde hittills i tidigare kurser där man kunde
-   testa allt man vill under arbetet. Dock efter handledningstillfällen kom vi igång med vilket sort av språk vi kommer skapa då vi fick
-    en bättre bild och kunde ta de första stegen. Att skriva all tokens och all BNF-grammatiken var relativt enkelt då kunde vi skriva dem
-     klart mycket snabbare än vi trodde. Däremot var vi på fel spår och hade gått för långt med att skriva sakerna som inte var relevanta
-      i den tidpunkten. Detta märkte vi tack vare vår handledare under en av handledningstillfällen som rekommenderade att vi borde ta saker
-       ett steg i taget för att testa och se om de fungerar eller inte. Exempelvis man kan börja med matematik och operationer och sedan kan
-        man börja med tilldelning och variabler och så vidare. 
-
-Under projektet var vi tvungna att ändra grammatiken ständigt eftersom vi ibland inte fick förväntade resultat så grammatiken förändrades till 
-den bättre versionen hela tiden tills vi var klara. 
-
-
-Ett av de problemen, konstig nog, vi hade under arbetet var att minustecknet inte fungerade som det ska, dvs det fungerade bara när man skriver 
-(5 - 2) med mellanrum. Vi lyckades lösa problemet genom att ändra på vår tokens så att de matchar bara tal oavsett de är positiva eller negativa, 
-sedan ändrade vi på Constant klassen så vi lade till en if-sats som säger om det är negativ så ska den siffran multipliceras med (-1). Innan hade vi 
-matchgrupp bara för Float och Integer i atom matchregel så vi behövde lägga till också de Float och Integer som behövs för negativa tal.
-
-
-En annan sak som fick mer tid av oss var booleska uttryck hanteringen. Detta var viktigt för oss då vi behövde den för att gå vidare med att testa 
-resten av programmen där ett boolesk uttryck används. Senare märkte vi att vi hade ingen matchgrupp för \textbf{'true'} och \textbf{'false'} för att känna till om något 
-värde är falskt eller sant. Detta fick vi lösa genom att lägga till matchgrupp till \textbf{'false'} och \textbf{'true'} som också använder sig av klassen \textbf{Constant}. 
-Då fick vi \textbf{or} och \textbf{and} fungera som det ska, men inte \textbf{not} eftersom \textbf{not} använde samma klass som \textbf{or/and} och det var inte så bra eftersom
-\textbf{or/and} klassen behöver ta in 3 arguments/parametrar men \textbf{not} behöver bara ha två, så vi behövde skapa klassen \textbf{Not} som kommer bara hantera det fallet
- för programmet.
-
-
-Ett annat stort problem vi stött på under projektet var ordningen på \textbf{statement} matchgrupperna samt de andra matchgrupperna i BNF. Där vi började få samma
- felmeddelande för flera saker vi skapade. Detta tog lång tid för att hitta vart problemet är, där vi märkte i slutet att det ligger på ordningen där minst 
- generella ska komma först i ordningen och mest generella ska vara i slutet. Det handlar mest om erfarenhet man får under projektarbetet, skulle vi vara medvetna 
- på att minst generella ska vara först i ordningen så skulle det vara snabbt att fixa problemet eller kanske vi inte skulle hamna på detta problemet alls. 
-
-
-En av de svåraste delarna i språket var att skapa scopehanteringen vilket var på grund av att vi inte var säkra om det behövs i språket eller ej. Efter handledarens 
-förklaring om scopehantering fick vi veta vad exakt scopehantering är och vilka saker man måste tänka för att implementera den. Vi fick veta att de är massa våningar 
-för exempel våning 0 är det globala scopet och våning 1 är en lokal scope till exempel en funktion, där varje scope kommer ha sina egna variablar. 
-
-
-Om vi jämför språkspecifikations dokumentet med det slutliga arbetet så kan vi säga att vi har ändrat vår tanke med scopehanteringen, eftersom vi tycker att det 
-är lättare för nybörjare att ha dynamisk istället för statisk scopehantering. 
-
-
-Avslutningsvis fick vi mycket stora erfarenheter som vi inte behärskade innan projektets gång och vi tycker också att vi har nått målet som var att förstå 
-hur ett programmeringsspråk är uppbyggt samt vilka verktyg det behövs för att skapa ett eget programmeringsspråk. 
-
-
-        
-\newpage
-\section{Bilagor}
-
-\subsection{BNF Grammatik}
-\lstinputlisting[language=Ruby]{ETL(som lämnas in)/BNF.txt}
-
-\newpage
-\subsection{ETL.rb}
-\lstinputlisting[language=Ruby]{ETL(som lämnas in)/ETL.rb}
-
-\newpage
-\subsection{classes.rb}
-\lstinputlisting[language=Ruby]{ETL(som lämnas in)/classes.rb}
-
-\newpage
-\subsection{etl.etl}
-\lstinputlisting[language=Ruby]{ETL(som lämnas in)/etl.etl}
-
-\newpage
 \section{Bilder}
 
 \begin{figure}[h]
@@ -574,12 +392,6 @@ hur ett programmeringsspråk är uppbyggt samt vilka verktyg det behövs för at
 \includegraphics[width=\textwidth]{activate_file}
 \end{figure}
 
-\newpage
-\begin{figure}[h]
-\caption{Här parsas en konstruktion där flera strängar adderas med varandra med hjälp av klass objektet som skapas av klassen \textbf{Plus\_str}.\\ \\}
-\centering
-\includegraphics[width=110mm]{tree}
-\end{figure}
     
 
 \end{document}
