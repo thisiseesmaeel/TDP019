@@ -1,8 +1,8 @@
 y = 1
 while (y < 5)
 write "while loop fungerar"
-y = y + 1
 <<stop
+y = y + 1
 endwhile
 
 
