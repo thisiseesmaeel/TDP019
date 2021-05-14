@@ -66,6 +66,23 @@ endif
 
 
 write "**************************************"
+write "***     Multiple strings Test      ***"
+write "**************************************"
+
+n = "Ahmed Sikh"
+b = " Ismail"
+v = " !"
+
+write "Hej" plus " på dig"
+
+write "ETL" plus " är" plus " lätt"
+
+write b plus v
+
+write n plus v plus b
+
+
+write "**************************************"
 write "*** Funktioner utan parameter Test ***"
 write "**************************************"
 
@@ -85,7 +102,7 @@ write w
 
 
 write "**************************************"
-write "*** Funktioner med parameter Test ***"
+write "*** Funktioner med parameter Test  ***"
 write "**************************************"
 
 s = 2
@@ -99,19 +116,3 @@ write foo(25, 75)
 
 write s
 write j
-
-write "**************************************"
-write "***     Multiple strings Test      ***"
-write "**************************************"
-
-n = "Ahmed Sikh"
-b = " Ismail"
-v = " !"
-
-write "Hej" plus " på dig"
-
-write "ETL" plus " är" plus " lätt"
-
-write b plus v
-
-write n plus v plus b

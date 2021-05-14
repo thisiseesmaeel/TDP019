@@ -4,7 +4,6 @@ require './rdparse.rb'
 require './classes.rb'
 
 class Etl
-    attr_accessor :output
     def initialize
         @etlParser = Parser.new("ETL") do
       #+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- BEGIN TOKENS +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
@@ -210,7 +209,7 @@ class Etl
         @output = []
         etl_file = File.read(etl_file)
         @output = @etlParser.parse(etl_file)
-        @output
+        @output.each { |segment| segment.eval() }
     end
     
     def log(state = true)
@@ -227,7 +226,3 @@ checkEtl = Etl.new
 checkEtl.log(false)
 #checkEtl.activate_terminal
 checkEtl.activate_file("etl.etl")
-checkEtl.output.each { |segment|
-	if segment.class != Function and segment.class != FunctionCall
-		 segment.eval()
-    end }

@@ -34,7 +34,7 @@ def look_up(variable, our_vars)
     levelNr = $scope.receiveLevel
     if our_vars == $scope.receiveHolder
         loop do 
-            if our_vars[levelNr] != nil and our_vars[levelNr][variable] != nil
+            if our_vars[levelNr] and our_vars[levelNr][variable]
                 return our_vars[levelNr][variable]
             end
             levelNr = levelNr - 1
@@ -163,7 +163,7 @@ class Assign
         value = @assign_expr.eval
         @level_Nr = $scope.receiveLevel
         scp = $scope.receiveHolder
-        if scp[@level_Nr] != nil
+        if scp[@level_Nr]
             if scp[@level_Nr].has_key?(@variable.variable_name)
                 return scp[@level_Nr][@variable.variable_name] = value
             else
@@ -274,6 +274,8 @@ class Function
     def recieveArgs()
         @f_arguments
     end
+    def eval()
+    end
 end
 
 class FunctionCall
@@ -302,7 +304,6 @@ class FunctionCall
         @states.each { |state|
             if state.class == Return 
                 puts "-->> Function '#{@def_name.variable_name}' returning '#{state.eval}'"
-                break
             else
                 state.eval
             end }
