@@ -27,7 +27,6 @@ class ScopeHandler
         return nil
     end
 end
-
 $scope = ScopeHandler.new
 
 def look_up(variable, our_vars)

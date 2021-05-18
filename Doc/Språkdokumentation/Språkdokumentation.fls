@@ -253,25 +253,25 @@ OUTPUT Språkdokumentation.xdv
 INPUT Språkdokumentation.toc
 INPUT Språkdokumentation.toc
 OUTPUT Språkdokumentation.toc
-INPUT /usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
-INPUT /usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
-INPUT /usr/share/texlive/texmf-dist/tex/latex/listings/lstlang2.sty
-INPUT /usr/share/texlive/texmf-dist/tex/latex/listings/lstlang2.sty
-INPUT ETL(som lämnas in)/BNF.txt
-INPUT ETL(som lämnas in)/BNF.txt
-INPUT ETL(som lämnas in)/BNF.txt
-INPUT ETL(som lämnas in)/ETL.rb
-INPUT ETL(som lämnas in)/ETL.rb
-INPUT ETL(som lämnas in)/ETL.rb
-INPUT ETL(som lämnas in)/classes.rb
-INPUT ETL(som lämnas in)/classes.rb
-INPUT ETL(som lämnas in)/classes.rb
-INPUT ETL(som lämnas in)/etl.etl
-INPUT ETL(som lämnas in)/etl.etl
-INPUT ETL(som lämnas in)/etl.etl
 INPUT ./bilder/activate_terminal.png
 INPUT ./bilder/activate_file.png
 INPUT ./bilder/tree.png
+INPUT /usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+INPUT /usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+INPUT /usr/share/texlive/texmf-dist/tex/latex/listings/lstlang2.sty
+INPUT /usr/share/texlive/texmf-dist/tex/latex/listings/lstlang2.sty
+INPUT ETL(som lämnas in)/BNF.txt
+INPUT ETL(som lämnas in)/BNF.txt
+INPUT ETL(som lämnas in)/BNF.txt
+INPUT ETL(som lämnas in)/ETL.rb
+INPUT ETL(som lämnas in)/ETL.rb
+INPUT ETL(som lämnas in)/ETL.rb
+INPUT ETL(som lämnas in)/classes.rb
+INPUT ETL(som lämnas in)/classes.rb
+INPUT ETL(som lämnas in)/classes.rb
+INPUT ETL(som lämnas in)/etl.etl
+INPUT ETL(som lämnas in)/etl.etl
+INPUT ETL(som lämnas in)/etl.etl
 INPUT Språkdokumentation.aux
 INPUT ./Språkdokumentation.out
 INPUT ./Språkdokumentation.out
