@@ -30,7 +30,7 @@ end
 
 $scope = ScopeHandler.new
 
-def look_up(variable, our_vars)
+def look_up(variable, o ur_vars)
     levelNr = $scope.receiveLevel
     if our_vars == $scope.receiveHolder
         loop do 

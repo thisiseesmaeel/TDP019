@@ -24,6 +24,7 @@ write "while loop fungerar"
 y = y + 1
 endwhile
 
+
 write "**************************************"
 write "***       If-sats Test             ***"
 write "**************************************"
