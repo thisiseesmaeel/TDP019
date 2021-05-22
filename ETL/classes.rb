@@ -34,14 +34,14 @@ $scope = ScopeHandler.new
 def look_up(variable, our_vars)
     levelNr = $scope.receiveLevel
     if our_vars == $scope.receiveHolder
-        loop do 
+        loop do
             if our_vars[levelNr] != nil and our_vars[levelNr][variable] != nil
                 return our_vars[levelNr][variable]
             end
             levelNr = levelNr - 1
         break if (levelNr < 0)
         end
-        
+
         if our_vars[levelNr] == nil
             our_vars[variable]
         end
@@ -68,11 +68,11 @@ class Expr
     def eval()
         case sign
             when '+'
-                return lhs.eval + rhs.eval 
+                return lhs.eval + rhs.eval
             when '-'
                 return lhs.eval - rhs.eval
             when '*'
-                return lhs.eval * rhs.eval 
+                return lhs.eval * rhs.eval
             when '/'
                 return lhs.eval / rhs.eval
             else nil
@@ -90,7 +90,7 @@ class Plus_str
     def eval()
         case @sign
             when 'plus'
-                return @lhs.eval + @rhs.eval 
+                return @lhs.eval + @rhs.eval
             else nil
         end
     end
@@ -106,13 +106,13 @@ class Condition
     def eval()
         case sign
             when '<', 'less than'
-                return lhs.eval < rhs.eval 
+                return lhs.eval < rhs.eval
             when '>', 'greater than'
-                return lhs.eval > rhs.eval 
+                return lhs.eval > rhs.eval
             when '<=', 'less than or equal to'
-                return lhs.eval <= rhs.eval 
+                return lhs.eval <= rhs.eval
             when '>=', 'greater than or equal to'
-                return lhs.eval >= rhs.eval 
+                return lhs.eval >= rhs.eval
             when '!=', 'not equal to'
                 return lhs.eval != rhs.eval
             when '==', 'equal'
@@ -186,7 +186,7 @@ class Constant
             @value
         end
     end
-end 
+end
 
 class Print
     def initialize(value)
@@ -194,12 +194,12 @@ class Print
     end
     def eval()
         #puts
-        if @value.eval != nil   
+        if @value.eval != nil
             puts "-->> Printing '#{@value.eval}'"
             @value.eval
         else
             nil
-        end   
+        end
     end
 end
 
@@ -217,7 +217,7 @@ class If
             @otherwise_states.eval()
         end
     end
-end 
+end
 
 class While
     attr_accessor :bool_logic, :states
@@ -249,7 +249,7 @@ class Stop
     end
 end
 
-class Function     
+class Function
     attr_accessor :def_name, :f_arguments, :states
     def initialize(def_name, f_arguments, states)
         @def_name = def_name
@@ -278,22 +278,22 @@ class FunctionCall
         @f_arguments = $our_funcs[@def_name.variable_name].recieveArgs
 
         if !$our_funcs.has_key?(@def_name.variable_name)
-            raise("OOOPS! THERE IS NO FUNCTION CALLED '#{@def_name.variable_name}' ")
+          raise("OOOPS! THERE IS NO FUNCTION CALLED '#{@def_name.variable_name}' ")
         end
         if (@f_c_arguments.length != @f_arguments.length)
-            raise("FAIL! WRONG NUMBER OF ARGUMENTS. (GIVEN #{@f_c_arguments.length} EXPECTED #{@f_arguments.length})")
+          raise("FAIL! WRONG NUMBER OF ARGUMENTS. (GIVEN #{@f_c_arguments.length} EXPECTED #{@f_arguments.length})")
         end
-    end
-    def eval()        
+      end
+      def eval()
         scp = $scope.incre
         funcArgs_len = 0
         funcCallArgs_len = @f_c_arguments.length
         while (funcArgs_len < funcCallArgs_len)
             scp[@f_arguments[funcArgs_len].variable_name] = @f_c_arguments[funcArgs_len].eval
             funcArgs_len = funcArgs_len + 1
-        end   
+        end
         @states.each { |state|
-            if state.class == Return 
+            if state.class == Return
                 puts "-->> Function '#{@def_name.variable_name}' returning '#{state.eval}'"
                 break
             else
@@ -302,7 +302,7 @@ class FunctionCall
         scp.delete($scope.receiveLevel)
         $scope.decre(scp)
     end
-end 
+end
 
 class Return
     def initialize(value)
