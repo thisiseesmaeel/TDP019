@@ -38,7 +38,7 @@
 \graphicspath{{./bilder/}}
 
 
-\newcommand{\version}{Version 1.0}
+\newcommand{\version}{Version 1.1}
 \author{Ahmed Sikh , \url{ahmsi881@student.liu.se}\\
 Sayed Ismail Safwat, \url{saysa289@student.liu.se}}
 
@@ -58,7 +58,7 @@ Sayed Ismail Safwat}
 \hline
 Ver. & Revisionsbeskrivning & Datum \\\hline
 1.0 & Första version av Språkdokumentation & 210510 \\\hline
-1.1 & Andra version av Språkdokumentation & 210518 \\\hline
+1.1 & Andra version av Språkdokumentation & 210522 \\\hline
 \end{tabularx}
 \end{table}
 \tableofcontents
@@ -172,7 +172,7 @@ Exempel på flerradskommentar:
  
 Exempel på enkelradskommentar:
 \begin{verbatim}
-    << Här ignoreras bara en rad som skrevs med << i början av raden.
+    << Här ignoreras bara en rad som skrevs med (<<) i början av raden.
     << Varje rad måste ha << i början för att den ska ignoreras.
 \end{verbatim}
  
@@ -448,7 +448,7 @@ Här kommer alla tokens i samma ordning som de är på \textbf{ETL.rb} filen:
 
 \item Matchar och ignorerar flerradskommentarer.
 \begin{verbatim}
-    token(/\<comment[^!]*\<end/)
+    token(/^(<comment[\w\W\s]*<end)/)
 \end{verbatim}
 \item Matchar och ignorerar enkelradskommentar
 \begin{verbatim}

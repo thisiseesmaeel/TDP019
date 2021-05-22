@@ -195,7 +195,6 @@ class Print
         @value = value
     end
     def eval()
-        #puts
         if @value.eval != nil   
             puts "-->> Printing '#{@value.eval}'"
             @value.eval

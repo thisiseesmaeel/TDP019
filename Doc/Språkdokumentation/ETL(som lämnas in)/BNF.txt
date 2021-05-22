@@ -84,7 +84,7 @@
 <ARGUMENT>    ::= <STRING_EXPR>
                 | <EXPR>
 
-<WHILE_LOOP>  ::= while ( <BOOL_LOGIC> ) <STATEMENTS> endwhile
+<WHILEITERATION>  ::= while ( <BOOL_LOGIC> ) <STATEMENTS> endwhile
 
 <STOP>        ::= stop
 
