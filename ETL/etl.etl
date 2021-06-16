@@ -1,19 +1,90 @@
+write "**************************************"
+write "***        Matematik Test          ***"
+write "**************************************"
+
+write 2 + 4
+write 2 - 4
+write 4 - 3
+write 2 * 4 + 1
+num = (2 * 4) + 1
+write num
+write 4 / 2 * 5
+write 2 ^ 10
+write 4 % 3
+
+
+write "**************************************"
+write "***      While-loop Test           ***"
+write "**************************************"
+
 y = 1
-while ( y < 4) 
+while (y < 5)
 write "while loop fungerar"
-y = y + 1
 <<stop
+y = y + 1
 endwhile
 
+write "**************************************"
+write "***       If-sats Test             ***"
+write "**************************************"
 
 x = 7
 u = 8
 if (x > 6 and u equal 8) then
-write "if sats fungerar"
+write "if-sats fungerar"
 otherwise
 write "otherwise fungerar"
 endif
 
+write "**************************************"
+write "***     Elseif-sats Test           ***"
+write "**************************************"
+
+i = 2
+h = 10
+if (i != 2) then
+write "if-sats fungerar"
+elseif (h == 10) then
+write "elseif-sats fungerar"
+otherwise
+write "otherwise fungerar"
+endif
+
+write "**************************************"
+write "***     Otherwise-sats Test        ***"
+write "**************************************"
+
+r = 2
+t = 10
+if (r != 2) then
+write "if-sats fungerar"
+elseif (t != 10) then
+write "elseif-sats fungerar"
+otherwise
+write "otherwise fungerar"
+endif
+
+
+write "**************************************"
+write "***     Multiple strings Test      ***"
+write "**************************************"
+
+n = "Ahmed Sikh"
+b = " Ismail"
+v = " !"
+
+write "Hej" plus " på dig"
+
+write "ETL" plus " är" plus " lätt"
+
+write b plus v
+
+write n plus v plus b
+
+
+write "**************************************"
+write "*** Funktioner utan parameter Test ***"
+write "**************************************"
 
 c = 10
 
@@ -29,6 +100,11 @@ write add()
 write c
 write w
 
+
+write "**************************************"
+write "*** Funktioner med parameter Test  ***"
+write "**************************************"
+
 s = 2
 
 define foo(w, k)
@@ -40,21 +116,3 @@ write foo(25, 75)
 
 write s
 write j
-
-
-n = "Ahmed Sikh"
-b = "Ismail"
-v = " !!"
-
-write "Hej" plus " på dig"
-
-write "ETL" plus " är" plus " lätt"
-
-write b plus v
-
-write n plus v plus b
-
-
-
-
-

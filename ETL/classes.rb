@@ -27,15 +27,13 @@ class ScopeHandler
         return nil
     end
 end
-
 $scope = ScopeHandler.new
-
 
 def look_up(variable, our_vars)
     levelNr = $scope.receiveLevel
     if our_vars == $scope.receiveHolder
         loop do 
-            if our_vars[levelNr] != nil and our_vars[levelNr][variable] != nil
+            if our_vars[levelNr] and our_vars[levelNr][variable]
                 return our_vars[levelNr][variable]
             end
             levelNr = levelNr - 1
@@ -75,6 +73,10 @@ class Expr
                 return lhs.eval * rhs.eval 
             when '/'
                 return lhs.eval / rhs.eval
+            when '^'
+                return lhs.eval ** rhs.eval
+            when '%'
+                return lhs.eval % rhs.eval
             else nil
         end
     end
@@ -160,7 +162,7 @@ class Assign
         value = @assign_expr.eval
         @level_Nr = $scope.receiveLevel
         scp = $scope.receiveHolder
-        if scp[@level_Nr] != nil
+        if scp[@level_Nr]
             if scp[@level_Nr].has_key?(@variable.variable_name)
                 return scp[@level_Nr][@variable.variable_name] = value
             else
@@ -193,7 +195,6 @@ class Print
         @value = value
     end
     def eval()
-        #puts
         if @value.eval != nil   
             puts "-->> Printing '#{@value.eval}'"
             @value.eval
@@ -204,20 +205,25 @@ class Print
 end
 
 class If
-    attr_accessor :bool_logic, :states, :otherwise_states
-    def initialize(bool_logic, states, otherwise_states = nil)
-        @bool_logic = bool_logic
+    attr_accessor :if_bool_logic, :states, :elsif_bool_logic, :elsif_state, :otherwise_states
+    def initialize(if_bool_logic, states, elsif_bool_logic = nil, elsif_state = nil, otherwise_states = nil)
+        @if_bool_logic = if_bool_logic
         @states = states
+        @elsif_bool_logic = elsif_bool_logic
+        @elsif_state = elsif_state
         @otherwise_states = otherwise_states
     end
     def eval()
-        if @bool_logic.eval()
+        if @if_bool_logic.eval()
             @states.eval()
-        else @otherwise_states != nil
+        elsif @elsif_bool_logic.eval()
+                @elsif_state.eval()
+        elsif @otherwise_states != nil
             @otherwise_states.eval()
         end
     end
 end 
+
 
 class While
     attr_accessor :bool_logic, :states
@@ -229,8 +235,7 @@ class While
         check_stop = false
 	    while @bool_logic.eval
             @states.each { |segment|
-            value = segment.eval()
-            if (value == "stop")
+            if (segment.eval() == "stop")
                 check_stop = true
             end }
             if (check_stop == true)
@@ -267,6 +272,8 @@ class Function
     def recieveArgs()
         @f_arguments
     end
+    def eval()
+    end
 end
 
 class FunctionCall
@@ -295,7 +302,6 @@ class FunctionCall
         @states.each { |state|
             if state.class == Return 
                 puts "-->> Function '#{@def_name.variable_name}' returning '#{state.eval}'"
-                break
             else
                 state.eval
             end }

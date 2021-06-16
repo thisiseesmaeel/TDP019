@@ -31,6 +31,8 @@
 
 <TERM>        ::= <TERM> * <ATOM> 
                 | <TERM> / <ATOM>
+                | <TERM> ^ <ATOM>
+                | <TERM> % <ATOM>
                 | <ATOM>
 
 <BOOL_LOGIC>  ::= <BOOL_LOGIC> and <BOOL_LOGIC>
@@ -79,17 +81,16 @@
 <ARGUMENTS>   ::= <ARGUMENTS> , <ARGUMENT>
                 | <ARGUMENT>
 
-<ARGUMENT>    ::= <MULTIPLE_STRINGS>
-                | <STRING_EXPR>
+<ARGUMENT>    ::= <STRING_EXPR>
                 | <EXPR>
-                | <BOOL_LOGIC>
 
-<WHILE_LOOP>  ::= while ( <BOOL_LOGIC> ) <STATEMENTS> endwhile
+<WHILEITERATION>  ::= while ( <BOOL_LOGIC> ) <STATEMENTS> endwhile
 
 <STOP>        ::= stop
 
 <IF_BOX>      ::= if ( <BOOL_LOGIC> ) then <STATEMENTS> endif
-                | if ( <BOOL_LOGIC> ) then <STATEMENTS> otherwise <STATEMENTS> endif             
+                | if ( <BOOL_LOGIC> ) then <STATEMENTS> otherwise <STATEMENTS> endif     
+                | if ( <BOOL_LOGIC> ) then <STATEMENTS> elseif ( <BOOL_LOGIC> ) then <STATEMENTS> otherwise <STATEMENTS> endif           
                 
 <PRINT>       ::= write <MULTIPLE_STRINGS>
                 | write <STRING_EXPR>
